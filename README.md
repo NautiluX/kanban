@@ -1,2 +1,2 @@
 # kanban
-Kanban board
+Kanban board. Not yet nearly running.
