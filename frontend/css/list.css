@@ -1,0 +1,133 @@
+body.dragging, body.dragging * {
+    cursor: move !important;
+}
+body {
+    font-size: 10pt;
+    font-family: sans-serif;
+    color: #202020;
+    background-color: 002536;
+    padding:0px;
+    margin:0px;
+    overflow:hidden;
+    width:100%;
+}
+
+.dragged {
+    position: absolute;
+    opacity: 0.8;
+    z-index: 2000;
+}
+
+ol.example li.placeholder {
+    position: relative;
+    /** More li styles **/
+}
+ol.example li.placeholder:before {
+    position: absolute;
+    /** Define arrowhead **/
+}
+
+ol {
+    list-style-type: none;
+    min-height:100px;
+    margin: 0px;
+    padding: 0px;
+    margin-left:-5px;
+    width:300px;
+}
+
+li {
+    padding: 5px;
+    margin:5px;
+    border: 0px;
+    background-color: #94D3F0;
+    border-radius:3px;
+    box-shadow: 1px 1px 1px #2081AE;
+}
+
+li.newCard {
+    background-color: #359AC9;
+    box-shadow: 1px 1px 1px #A6D5EB;
+}
+
+input.newCard[placeholder] {
+    color:#000 !important;
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #333333;
+}
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+    color: #333333;
+}
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+    color: #333333;
+}
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: #333333;
+}
+textarea.newCard {
+    background-color: #359AC9;
+    border: 0px;
+    background-color: rgba(255,255,255,0.0);
+    word-wrap: break-word;
+    word-break: break-all;
+    width:100%;
+    height:60px;
+    resize: none;
+    font-size: 10pt;
+}
+
+div.title {
+    width: 100%;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+div.page {
+    width: calc(100% - 60px);
+    white-space: nowrap;
+    padding: 20px;
+    margin: 10px;
+    text-overflow: scroll;
+    overflow-x:scroll;
+    height:100%;
+}
+
+div.lanes {
+    width:100%;
+}
+
+div.menu {
+    background-color:#000;
+    width: 100%;
+    color: #bbbbbb;
+    padding: 10px;
+}
+
+span.lane {
+    width: 300px;
+    background-color:#0090d2;
+    border-radius:3px;
+    margin: 4px;
+    padding: 15px;
+    vertical-align:top;
+    display: inline-block;
+    white-space: normal;
+}
+
+h1 {
+    font-family: Pacifico;
+    font-size: 18pt;
+    margin-left:10px;
+    color: #bbbbbb;
+}
+
+h2 {
+    font-size: 11pt;
+    margin: 0px;
+    margin-bottom: 10px;
+}
