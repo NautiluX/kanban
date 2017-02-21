@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import javax.naming.NamingException;
 
-public abstract class DatabaseLoader<DAOType> {
+public abstract class DAO<DAOType> {
 	private HashMap<Integer, DAOType> daos = null;
 	protected Database database = null;
 
@@ -15,7 +15,7 @@ public abstract class DatabaseLoader<DAOType> {
 
 	public abstract void loadDAOs() throws SQLException;
 
-	public DatabaseLoader() throws NamingException, SQLException {
+	public DAO() throws NamingException, SQLException {
 		daos = new HashMap<Integer, DAOType>();
 		database = new Database();
 	}
@@ -28,7 +28,7 @@ public abstract class DatabaseLoader<DAOType> {
 		return daos.get(id);
 	}
 
-	public ArrayList<DAOType> getBoards() {
+	public ArrayList<DAOType> getObjects() {
 		ArrayList<DAOType> daoArray = new ArrayList<DAOType>(daos.values());
 		return daoArray;
 	}

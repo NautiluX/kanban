@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ntlx.board.Board;
 import com.ntlx.board.Boards;
-import com.ntlx.data.DatabaseBoardLoader;
+import com.ntlx.data.DatabaseBoardDAO;
 
 /**
  * Servlet implementation class Setup
@@ -25,10 +25,10 @@ public class GetBoard extends HttpServlet {
      * Default constructor. 
      */
 
-	DatabaseBoardLoader dbl;
+	DatabaseBoardDAO dbl;
 	
     public GetBoard() throws NamingException, SQLException {
-    	dbl = new DatabaseBoardLoader();
+    	dbl = new DatabaseBoardDAO();
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,7 +47,7 @@ public class GetBoard extends HttpServlet {
 
 	private void returnAllBoards(HttpServletResponse response) throws SQLException, IOException {
 		dbl.loadDAOs();
-		Boards boards = new Boards(dbl.getBoards());
+		Boards boards = new Boards(dbl.getObjects());
 		response.getOutputStream().print(boards.toString());
 	}
 	

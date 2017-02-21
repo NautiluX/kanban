@@ -2,9 +2,9 @@ package com.ntlx.data;
 
 import com.ntlx.board.User;
 
-public class DatabaseUser extends User {
+public class DatabaseUserDAO extends User {
 
-	public DatabaseUser(int id, String name) {
+	public DatabaseUserDAO(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
