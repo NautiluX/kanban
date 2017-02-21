@@ -16,7 +16,7 @@ backend:
     links: 
         - database
     volumes:
-        - ./backend/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+        - ./java_backend/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
 database:
     image: mysql
     environment:
