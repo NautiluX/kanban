@@ -1,8 +1,8 @@
-package com.ntlx.dao;
+package com.ntlx.board;
 
 import com.google.gson.Gson;
 
-public abstract class Board extends DAO{
+public abstract class Board{
 	protected String name;
 	protected int id;
 	protected User owner;

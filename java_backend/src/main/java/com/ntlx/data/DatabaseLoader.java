@@ -1,16 +1,13 @@
 package com.ntlx.data;
 
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.naming.NamingException;
 
-import com.ntlx.dao.Board;
-import com.ntlx.dao.DAO;
-
-
-public abstract class DatabaseLoader<DAOType extends DAO> {
+public abstract class DatabaseLoader<DAOType> {
 	private HashMap<Integer, DAOType> daos = null;
 	protected Database database = null;
 

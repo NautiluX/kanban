@@ -1,18 +1,15 @@
-package com.ntlx.rest;
+package com.ntlx.resttest;
 
 import org.junit.*;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.NamingException;
 
 import org.junit.Test;
 
-import com.ntlx.dao.Board;
-import com.ntlx.dao.Boards;
-import com.ntlx.dao.DatabaseBoard;
-import com.ntlx.dao.TestBoard;
+import com.ntlx.board.Board;
+import com.ntlx.board.Boards;
+import com.ntlx.boardtest.TestBoard;
 
 public class BoardsTest {
 

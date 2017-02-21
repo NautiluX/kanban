@@ -1,10 +1,9 @@
-package com.ntlx.daotest;
+package com.ntlx.boardtest;
 
 
 import org.junit.*;
 
-
-import com.ntlx.dao.*;
+import com.ntlx.board.*;
 
 public class BoardTest {
 

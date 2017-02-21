@@ -1,4 +1,4 @@
-package com.ntlx.dao;
+package com.ntlx.board;
 
 import java.util.ArrayList;
 

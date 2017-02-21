@@ -1,10 +1,8 @@
-package com.ntlx.daotest;
+package com.ntlx.boardtest;
 
 import org.junit.*;
 
-
-import com.ntlx.dao.TestOwner;
-import com.ntlx.dao.User;
+import com.ntlx.board.User;
 
 public class UserTest {
 	User user = new TestOwner();

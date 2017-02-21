@@ -1,8 +1,8 @@
-package com.ntlx.dao;
+package com.ntlx.board;
 
-public abstract class User extends DAO{
-	int id;
-	String name;
+public abstract class User{
+	protected int id;
+	protected String name;
 	
 	public int getId() {
 		return id;

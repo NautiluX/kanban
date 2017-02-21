@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ntlx.dao.Board;
-import com.ntlx.dao.Boards;
+import com.ntlx.board.Board;
+import com.ntlx.board.Boards;
 import com.ntlx.data.DatabaseBoardLoader;
 
 /**
