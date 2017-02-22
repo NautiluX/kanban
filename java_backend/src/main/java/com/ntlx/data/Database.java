@@ -12,9 +12,10 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class Database {
+	public static Database instance = null;
 	private Connection conn;
 	
-	public Database() throws NamingException, SQLException{
+	private Database() throws NamingException, SQLException{
 		initializeDatabaseConnection();
 	}
 	
@@ -38,5 +39,12 @@ public class Database {
     public void executeUpdate(String sql) throws SQLException {
     	Statement statement = conn.createStatement();
 		statement.executeUpdate(sql);
+    }
+    
+    public static Database getInstance() throws NamingException, SQLException {
+    	if (instance == null) {
+    		instance = new Database();
+    	}
+    	return instance;
     }
 }

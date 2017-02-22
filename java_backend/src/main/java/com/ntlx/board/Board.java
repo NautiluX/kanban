@@ -1,13 +1,20 @@
 package com.ntlx.board;
 
+import java.util.Vector;
+
 import com.google.gson.Gson;
 
-public abstract class Board{
+public class Board{
 	protected String name;
 	protected int id;
 	protected User owner;
+	protected Vector<Lane> lanes;
 	
-	public Board() {
+	public Board(int id, String name, User owner) {
+		this.name = name;
+		this.id = id;
+		this.owner = owner;
+		this.lanes = new Vector<Lane>();
 	}
 	
 	public String getName() {
@@ -20,6 +27,14 @@ public abstract class Board{
 	
 	public User getOwner() {
 		return owner;
+	}
+	
+	public Vector<Lane> getLanes() {
+		return lanes;
+	}
+	
+	public void addLane(Lane lane) {
+		lanes.add(lane);
 	}
 	
 	public String toString() {

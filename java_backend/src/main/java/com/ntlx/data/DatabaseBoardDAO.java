@@ -1,14 +1,16 @@
 package com.ntlx.data;
 
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
 import com.ntlx.board.Board;
+import com.ntlx.board.User;
 
-public class DatabaseBoardDAO extends DAO<Board>{
+public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	
 	private String baseSql = "SELECT BOARD_ID, BOARD_NAME, USER_NAME, USER_ID FROM BOARDS INNER JOIN USERS ON BOARDS.OWNER_ID = USERS.USER_ID";
 	
@@ -38,9 +40,15 @@ public class DatabaseBoardDAO extends DAO<Board>{
 	
 	public void createBoards(ResultSet rs) throws SQLException {
 		while (rs.next()) {
-			DatabaseUserDAO user = new DatabaseUserDAO(rs.getInt("USER_ID"), rs.getString("USER_NAME"));
-			DatabaseBoard board = new DatabaseBoard(rs.getInt("BOARD_ID"), rs.getString("BOARD_NAME"), user);
+			User owner = new User(rs.getInt("USER_ID"), rs.getString("USER_NAME"));
+			Board board = new Board(rs.getInt("BOARD_ID"), rs.getString("BOARD_NAME"), owner);
+			loadLanes(board);
 			addDAO(board.getId(), board);
 		}
+	}
+	
+	public void loadLanes(Board board) throws SQLException {
+		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(board, database);
+		databaseLaneDao.loadDAOs();
 	}
 }

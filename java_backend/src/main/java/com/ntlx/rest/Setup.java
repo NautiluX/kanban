@@ -30,7 +30,7 @@ public class Setup extends HttpServlet {
     }
     
     public void executeSetup() throws SQLException, NamingException{
-    	db = new Database();
+    	db = Database.getInstance();
 		deleteTablesIfExisting();
     	createTables();
     	createInitialData();
