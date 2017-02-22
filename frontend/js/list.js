@@ -1,5 +1,5 @@
 var adjustment;
-$(function  () {
+var initSortable = function () {
     $("ol.example").sortable({
         group: 'example',
         pullPlaceholder: false,
@@ -35,13 +35,11 @@ $(function  () {
             });
         }
     });
-
-
-
     $('textarea.newCard').on("keydown", function (e) {
       if (e.which == 13) {
          $("<li>").insertBefore($(this.parentNode.parentNode).find("li.newCard")).append(this.value);
           this.value = "";
+          return false;
         }
     });
-});
+}

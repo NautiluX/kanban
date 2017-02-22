@@ -4,6 +4,8 @@
         <script src="lib/jquery-3.1.1.min.js"></script>
         <script src="lib/jquery-sortable.js"></script>
         <script src="js/list.js"></script>
+        <script src="js/loadDefaultBoard.js"></script>
+        <script src="js/init.js"></script>
         <link href="http://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
         <link href="css/list.css" rel="stylesheet" type="text/css">
     </head>
@@ -13,11 +15,11 @@
             Menu
         </div>
         <div class="title">
-            <h1>My Kanban Board</h1>
+            <h1 id="boardTitle">My Kanban Board</h1>
         </div>
         <div class="page">
-            <div class="lanes">
-                <span id="blocked" class="lane">
+            <div id="lanes" class="lanes">
+                <!--<span id="blocked" class="lane">
                     <h2>Blocked</h2>
                     <ol class='example'>
                         <li>First</li>
@@ -71,7 +73,7 @@
                             <textarea class="newCard" placeholder="+ new Card"></textarea>
                         </li>
                     </ol>
-                </span>
+                </span>-->
             </div>
         </div>
     </body>

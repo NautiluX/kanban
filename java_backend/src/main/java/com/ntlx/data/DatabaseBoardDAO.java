@@ -19,13 +19,12 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	}
 	
 	@Override
-	public void loadDAOs() throws SQLException {
+	public void loadDAOs() throws SQLException, NamingException {
 		ResultSet rs = database.executeQuery(baseSql);
 		createBoards(rs);
 	}
 
-	@Override
-	public Board loadSingleDAO(int id) throws SQLException {
+	public Board loadSingleDAO(int id) throws SQLException, NamingException {
 		ResultSet rs = executeSingleBoardQuery(id);
 		createBoards(rs);
 		return getDAO(id);
@@ -38,7 +37,7 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 		return rs;
 	}
 	
-	public void createBoards(ResultSet rs) throws SQLException {
+	public void createBoards(ResultSet rs) throws SQLException, NamingException {
 		while (rs.next()) {
 			User owner = new User(rs.getInt("USER_ID"), rs.getString("USER_NAME"));
 			Board board = new Board(rs.getInt("BOARD_ID"), rs.getString("BOARD_NAME"), owner);
@@ -47,8 +46,8 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 		}
 	}
 	
-	public void loadLanes(Board board) throws SQLException {
-		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(board, database);
+	public void loadLanes(Board board) throws SQLException, NamingException {
+		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(board);
 		databaseLaneDao.loadDAOs();
 	}
 }

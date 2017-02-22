@@ -32,6 +32,7 @@ public class GetBoard extends HttpServlet {
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
     	try {
 	    	String boardId = request.getParameter("id");
 			if (boardId == null) {
@@ -42,16 +43,18 @@ public class GetBoard extends HttpServlet {
 			}
     	} catch (SQLException e) {
 			response.getWriter().append("SQL Error: " + e.getMessage());
+		} catch (NamingException e) {
+			response.getWriter().append("Naming Error: " + e.getMessage());
 		}
 	}
 
-	private void returnAllBoards(HttpServletResponse response) throws SQLException, IOException {
+	private void returnAllBoards(HttpServletResponse response) throws SQLException, IOException, NamingException {
 		dbl.loadDAOs();
 		Boards boards = new Boards(dbl.getObjects());
 		response.getOutputStream().print(boards.toString());
 	}
 	
-	private void returnBoard(HttpServletResponse response, int id) throws SQLException, IOException {
+	private void returnBoard(HttpServletResponse response, int id) throws SQLException, IOException, NamingException {
 		Board board = dbl.loadSingleDAO(id);
 		if (board != null) {
 			response.getOutputStream().print(board.toString());

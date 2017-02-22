@@ -39,7 +39,7 @@ public class BoardTest {
 	public void testGetLanesJson() 
 	{
 		Board boardWithLanes = BoardTestUtils.createBoardWith3Lanes();
-		String json = "{\"name\":\"Test Board\",\"id\":1,\"owner\":{\"id\":1,\"name\":\"Test User\"},\"lanes\":[{\"id\":1,\"title\":\"Test Lane\"},{\"id\":1,\"title\":\"Test Lane\"},{\"id\":1,\"title\":\"Test Lane\"}]}";
+		String json = "{\"name\":\"Test Board\",\"id\":1,\"owner\":{\"id\":1,\"name\":\"Test User\"},\"lanes\":[{\"id\":1,\"title\":\"Test Lane\",\"cards\":[]},{\"id\":1,\"title\":\"Test Lane\",\"cards\":[]},{\"id\":1,\"title\":\"Test Lane\",\"cards\":[]}]}";
 		Assert.assertEquals(json, boardWithLanes.toString());
 	}
 	

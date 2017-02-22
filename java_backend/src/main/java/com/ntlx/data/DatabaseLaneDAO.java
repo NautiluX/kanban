@@ -17,37 +17,30 @@ public class DatabaseLaneDAO extends DatabaseDAO<Lane>{
 		super();
 		this.board = board;
 	}
-	
-	public DatabaseLaneDAO(Board board, Database database) {
-		super(database);
-		this.board = board;
-	}
 
 	@Override
-	public void loadDAOs() throws SQLException {
+	public void loadDAOs() throws SQLException, NamingException {
 		PreparedStatement statement = database.prepareStatement(baseSql);
 		statement.setInt(1, board.getId());
 		ResultSet rs = statement.executeQuery();
 		createLanes(rs);
 	}
 
-	private void createLanes(ResultSet rs) throws SQLException {
+	private void createLanes(ResultSet rs) throws SQLException, NamingException {
 		while (rs.next()) {
 			Lane lane = createLaneFromResultSet(rs);
 			board.addLane(lane);
 		}
 	}
 	
-	private Lane createLaneFromResultSet(ResultSet rs) throws SQLException {
-		return new Lane(rs.getInt("LANE_ID"), rs.getString("TITLE"));
+	private Lane createLaneFromResultSet(ResultSet rs) throws SQLException, NamingException {
+		Lane lane = new Lane(rs.getInt("LANE_ID"), rs.getString("TITLE"));
+		addCards(lane);
+		return lane;
 	}
-
-	@Override
-	public Lane loadSingleDAO(int id) throws SQLException {
-		PreparedStatement statement = database.prepareStatement(baseSql + " AND ID = ?");
-		statement.setInt(1, board.getId());
-		statement.setInt(2, id);
-		ResultSet rs = statement.executeQuery();
-		return createLaneFromResultSet(rs);
+	
+	private void addCards(Lane lane) throws SQLException, NamingException {
+		DatabaseCardDAO databaseCardDao = new DatabaseCardDAO(lane);
+		databaseCardDao.loadDAOs();
 	}
 }
