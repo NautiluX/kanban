@@ -7,4 +7,9 @@
         driverClassName="com.mysql.jdbc.Driver"
         username="kanban" password="k4nb4n"
     />
+
+<Realm className="org.apache.catalina.realm.DataSourceRealm"
+    dataSourceName="jdbc/kanban" userTable="USERS" userNameCol="USER_NAME"
+    userCredCol="PASSWORD" userRoleTable="USER_ROLES" roleNameCol="ROLE_NAME"
+    localDataSource="true"/>
 </Context>

@@ -50,6 +50,7 @@ public class Setup extends HttpServlet {
     	deleteTable("CARDS");
     	deleteTable("LANES");
     	deleteTable("BOARDS");
+    	deleteTable("USER_ROLES");
     	deleteTable("USERS");
     }
     
@@ -58,7 +59,8 @@ public class Setup extends HttpServlet {
     }
     
     public void createTables() throws NamingException, SQLException{
-    	db.executeUpdate("CREATE TABLE USERS (USER_ID INTEGER NOT NULL AUTO_INCREMENT, USER_NAME NVARCHAR(200), PASSWORD NVARCHAR(200), PRIMARY KEY (USER_ID))");
+    	db.executeUpdate("CREATE TABLE USERS (USER_ID INTEGER NOT NULL AUTO_INCREMENT, USER_NAME NVARCHAR(200), PASSWORD NVARCHAR(200), PRIMARY KEY (USER_ID, USER_NAME))");
+    	db.executeUpdate("CREATE TABLE USER_ROLES (USER_NAME NVARCHAR(200), ROLE_NAME NVARCHAR(200), PRIMARY KEY (USER_NAME, ROLE_NAME))");
     	db.executeUpdate("CREATE TABLE BOARDS (BOARD_ID INTEGER NOT NULL AUTO_INCREMENT, BOARD_NAME NVARCHAR(200), OWNER_ID INTEGER NOT NULL, PRIMARY KEY (BOARD_ID))");
     	db.executeUpdate("CREATE TABLE LANES (LANE_ID INTEGER NOT NULL AUTO_INCREMENT, BOARD_ID INTEGER NOT NULL, TITLE NVARCHAR(5000), AFTER_LANE_ID INTEGER, PRIMARY KEY (LANE_ID))");
     	db.executeUpdate("CREATE TABLE CARDS (CARD_ID INTEGER NOT NULL AUTO_INCREMENT, LANE_ID INTEGER NOT NULL, OWNER_ID INTEGER NOT NULL, AFTER_CARD_ID INTEGER, CONTENT NVARCHAR(5000), PRIMARY KEY (CARD_ID))");
@@ -67,7 +69,9 @@ public class Setup extends HttpServlet {
     }
     
     public void createInitialData() throws SQLException {
-    	db.executeUpdate("INSERT INTO USERS (USER_NAME, PASSWORD) VALUES ('admin', 'secret')");
+    	db.executeUpdate("INSERT INTO USERS (USER_NAME, PASSWORD) VALUES ('example_user', 'secret')");
+
+    	db.executeUpdate("INSERT INTO USER_ROLES (USER_NAME, ROLE_NAME) VALUES ('example_user', 'kanban_user')");
     	
     	db.executeUpdate("INSERT INTO BOARDS (BOARD_NAME, OWNER_ID) VALUES ('Default Board', 1)");
     	

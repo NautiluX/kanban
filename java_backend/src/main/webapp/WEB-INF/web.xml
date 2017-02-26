@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="kanban" version="2.5">
 	<display-name>Archetype Created Web Application</display-name>
-	<servlet>
+	<!--<servlet>
 		<description>
     	</description>
 		<display-name>Setup</display-name>
@@ -13,10 +13,42 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Setup</servlet-name>
-		<url-pattern>/Setup</url-pattern>
+		<url-pattern>/setup</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description>
+    	</description>
+		<display-name>GetBoard</display-name>
+		<servlet-name>GetBoard</servlet-name>
+		<servlet-class>com.ntlx.GetBoard</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetBoard</servlet-name>
+		<url-pattern>/getBoard</url-pattern>
+	</servlet-mapping>
+	-->
 	<resource-env-ref>
 		<resource-env-ref-name>jdbc/kanban</resource-env-ref-name>
 		<resource-env-ref-type>javax.sql.DataSource</resource-env-ref-type>
 	</resource-env-ref>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>*</web-resource-name>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>kanban_user</role-name>
+		</auth-constraint>
+
+		<user-data-constraint>
+			<!-- transport-guarantee can be CONFIDENTIAL, INTEGRAL, or NONE -->
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
 </web-app>

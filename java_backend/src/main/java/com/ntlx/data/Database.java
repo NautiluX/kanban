@@ -42,9 +42,13 @@ public class Database {
     }
     
     public static Database getInstance() throws NamingException, SQLException {
-    	if (instance == null) {
+    	if (instance == null || instance.isClosed()) {
     		instance = new Database();
     	}
     	return instance;
     }
+
+	private boolean isClosed() throws SQLException {
+		return conn.isClosed();
+	}
 }
