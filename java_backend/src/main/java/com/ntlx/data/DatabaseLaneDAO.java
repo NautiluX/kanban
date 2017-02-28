@@ -26,6 +26,15 @@ public class DatabaseLaneDAO extends DatabaseDAO<Lane>{
 		createLanes(rs);
 	}
 
+	public Lane loadLane(int id) throws SQLException, NamingException {
+		PreparedStatement statement = database.prepareStatement(baseSql + " AND LANE_ID = ?");
+		statement.setInt(1, board.getId());
+		statement.setInt(2, id);
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+		return createLaneFromResultSet(rs);
+	}
+
 	private void createLanes(ResultSet rs) throws SQLException, NamingException {
 		while (rs.next()) {
 			Lane lane = createLaneFromResultSet(rs);

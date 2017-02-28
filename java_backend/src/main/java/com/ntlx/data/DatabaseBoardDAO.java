@@ -2,6 +2,7 @@ package com.ntlx.data;
 
 import java.sql.PreparedStatement;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -9,6 +10,7 @@ import javax.naming.NamingException;
 
 import com.ntlx.board.Board;
 import com.ntlx.board.User;
+import com.ntlx.board.Lane;
 
 public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	
@@ -49,5 +51,10 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	public void loadLanes(Board board) throws SQLException, NamingException {
 		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(board);
 		databaseLaneDao.loadDAOs();
+	}
+
+	public Lane loadLane(Board board, int laneId) throws NamingException, SQLException {
+		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(board);
+		return databaseLaneDao.loadLane(laneId);
 	}
 }

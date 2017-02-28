@@ -13,6 +13,7 @@ import com.ntlx.board.User;
 public class DatabaseCardDAO extends DatabaseDAO<Card> {
 	Lane lane;
 	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, USER_NAME FROM CARDS INNER JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID WHERE LANE_ID = ?";
+	String insertSql = "INSERT INTO CARDS (LANE_ID, OWNER_ID, CONTENT) VALUES (?, ?, ?)";
 	public DatabaseCardDAO(Lane lane) throws NamingException, SQLException {
 		super();
 		this.lane = lane;
@@ -47,4 +48,11 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 		return card;
 	}
 
+	public void insertCard(Lane lane, User owner, String content) throws SQLException {
+		PreparedStatement statement = database.prepareStatement(insertSql);
+		statement.setInt(1, lane.getId());
+		statement.setInt(2, owner.getId());
+		statement.setString(3, content);
+		statement.executeUpdate();
+	}
 }

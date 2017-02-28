@@ -35,11 +35,27 @@ var initSortable = function () {
             });
         }
     });
+    registerNewCardEvent();
+}
+
+var registerNewCardEvent = function() {
     $('textarea.newCard').on("keydown", function (e) {
       if (e.which == 13) {
+          createCard(this.parentNode.parentNode.parentNode, this.value);
          $("<li>").insertBefore($(this.parentNode.parentNode).find("li.newCard")).append(this.value);
           this.value = "";
           return false;
         }
     });
-}
+};
+
+var createCard = function(lane, content) {
+    var laneId = $(lane).attr("lane_id");
+    $.post("/backend/newCard", 
+        {"boardId": selectedBoard.id, 
+         "laneId": laneId,
+         "content": content},
+        function () {
+        
+    });
+};
