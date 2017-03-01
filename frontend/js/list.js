@@ -52,11 +52,5 @@ var registerNewCardEvent = function() {
 
 var createCard = function(lane, content) {
     var laneId = $(lane).attr("lane_id");
-    $.post("/backend/newCard", 
-        {"boardId": selectedBoard.id, 
-         "laneId": laneId,
-         "content": content},
-        function (data) {
-            model.updateModel();
-    });
+    model.createCard(laneId, content);
 };
