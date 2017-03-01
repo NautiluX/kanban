@@ -43,7 +43,6 @@ public class NewCard extends HttpServlet {
     		String boardIdString = request.getParameter("boardId");
     		String laneIdString = request.getParameter("laneId");
     		String content = request.getParameter("content");
-    		response.getWriter().println("createCard("+boardIdString+", "+laneIdString+", "+content+")");
     		createCard(boardIdString, laneIdString, userName, content);
     		response.getWriter().append("{\"status\":\"success\"}");
     	} catch (SQLException e) {

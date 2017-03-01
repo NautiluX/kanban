@@ -1,10 +1,8 @@
 $( document ).ready(function() {
-    loadDefaultBoard(setBoard);
+    loadDefaultBoard();
 });
 
-var selectedBoard;
-var setBoard = function (board) {
-    selectedBoard = board;
+var renderBoard = function (board) {
     setBoardTitle(board.name);
     createBoardLanes(board);
     initSortable();
@@ -23,6 +21,7 @@ var createBoardLanes = function (board) {
 };
 
 var removeLanes = function () {
+    $(SORTABLE_SELECTOR).sortable("destroy")    
    $("#lanes").html(""); 
 };
 
@@ -32,7 +31,7 @@ var createLanes = function (lanes) {
         $('#lanes').append('<span class="lane" id="lane_' + lane.id + '" lane_id="' + lane.id + '">');
         $('#lane_'+lane.id).append('<h2>'+lane.title+'</h2>').append('<ol class="example" id="lane_' + lane.id + '_list">');
         lane.cards.forEach(function (card) {
-            $('#lane_'+lane.id+'_list').append('<li>' + card.content + '</li>');
+            $('#lane_'+lane.id+'_list').append('<li class="example">' + card.content + '</li>');
         });
         $('#lane_'+lane.id+'_list').append(newCardListItem);
     });

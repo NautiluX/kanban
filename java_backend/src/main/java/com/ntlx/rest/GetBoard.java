@@ -28,12 +28,13 @@ public class GetBoard extends HttpServlet {
 	DatabaseBoardDAO dbl;
 	
     public GetBoard() throws NamingException, SQLException {
-    	dbl = new DatabaseBoardDAO();
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
     	try {
+        	dbl = new DatabaseBoardDAO();
+
 	    	String boardId = request.getParameter("id");
 			if (boardId == null) {
 				returnAllBoards(response);

@@ -1,6 +1,7 @@
 var adjustment;
+var SORTABLE_SELECTOR="ol.example";
 var initSortable = function () {
-    $("ol.example").sortable({
+    $(SORTABLE_SELECTOR).sortable({
         group: 'example',
         pullPlaceholder: false,
         exclude: '.newCard',
@@ -55,7 +56,7 @@ var createCard = function(lane, content) {
         {"boardId": selectedBoard.id, 
          "laneId": laneId,
          "content": content},
-        function () {
-        
+        function (data) {
+            model.updateModel();
     });
 };
