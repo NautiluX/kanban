@@ -31,7 +31,7 @@ var createLanes = function (lanes) {
         $('#lanes').append('<span class="lane" id="lane_' + lane.id + '" lane_id="' + lane.id + '">');
         $('#lane_'+lane.id).append('<h2>'+lane.title+'</h2>').append('<ol class="example" id="lane_' + lane.id + '_list">');
         lane.cards.forEach(function (card) {
-            $('#lane_'+lane.id+'_list').append('<li class="example">' + card.content + '</li>');
+            $('#lane_'+lane.id+'_list').append('<li class="example" card_id="' + card.id + '">' + card.content + '</li>');
         });
         $('#lane_'+lane.id+'_list').append(newCardListItem);
     });
