@@ -16,4 +16,14 @@ Model.prototype.updateSelectedBoard = function(board) {
     renderBoard(board);
 };
 
+Model.prototype.createCard = function(laneId, content) {
+    $.post("/backend/newCard", 
+        {"boardId": selectedBoard.id, 
+         "laneId": laneId,
+         "content": content},
+        function (data) {
+            model.updateModel();
+        });
+}
+
 var model = new Model();
