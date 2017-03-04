@@ -17,7 +17,6 @@ public class DatabaseUserDAO extends DatabaseDAO<User> {
 		super();
 	}
 
-	@Override
 	public void loadDAOs() throws SQLException {
 		PreparedStatement statement = database.prepareStatement(baseSql);
 		ResultSet rs = statement.executeQuery();

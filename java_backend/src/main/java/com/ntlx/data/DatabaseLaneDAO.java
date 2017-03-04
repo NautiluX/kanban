@@ -10,32 +10,31 @@ import com.ntlx.board.Board;
 import com.ntlx.board.Lane;
 
 public class DatabaseLaneDAO extends DatabaseDAO<Lane>{
-	private String baseSql = "SELECT LANE_ID, TITLE FROM LANES WHERE BOARD_ID = ?";
-	private Board board;
+	private String baseSql = "SELECT LANE_ID, TITLE FROM LANES";
+	private String boardLanesSql = baseSql + " WHERE BOARD_ID = ?";
+	private String singleLaneSql = baseSql + " WHERE LANE_ID = ?";
 	
-	public DatabaseLaneDAO(Board board) throws NamingException, SQLException {
+	public DatabaseLaneDAO() throws NamingException, SQLException {
 		super();
-		this.board = board;
 	}
 
-	@Override
-	public void loadDAOs() throws SQLException, NamingException {
-		PreparedStatement statement = database.prepareStatement(baseSql);
+	
+	public void loadDAOs(Board board) throws SQLException, NamingException {
+		PreparedStatement statement = database.prepareStatement(boardLanesSql);
 		statement.setInt(1, board.getId());
 		ResultSet rs = statement.executeQuery();
-		createLanes(rs);
+		createLanes(rs, board);
 	}
 
 	public Lane loadLane(int id) throws SQLException, NamingException {
-		PreparedStatement statement = database.prepareStatement(baseSql + " AND LANE_ID = ?");
-		statement.setInt(1, board.getId());
-		statement.setInt(2, id);
+		PreparedStatement statement = database.prepareStatement(singleLaneSql);
+		statement.setInt(1, id);
 		ResultSet rs = statement.executeQuery();
 		rs.next();
 		return createLaneFromResultSet(rs);
 	}
 
-	private void createLanes(ResultSet rs) throws SQLException, NamingException {
+	private void createLanes(ResultSet rs, Board board) throws SQLException, NamingException {
 		while (rs.next()) {
 			Lane lane = createLaneFromResultSet(rs);
 			board.addLane(lane);
@@ -49,7 +48,7 @@ public class DatabaseLaneDAO extends DatabaseDAO<Lane>{
 	}
 	
 	private void addCards(Lane lane) throws SQLException, NamingException {
-		DatabaseCardDAO databaseCardDao = new DatabaseCardDAO(lane);
-		databaseCardDao.loadDAOs();
+		DatabaseCardDAO databaseCardDao = new DatabaseCardDAO();
+		databaseCardDao.loadDAOs(lane);
 	}
 }

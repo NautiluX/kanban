@@ -20,7 +20,6 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 		super();
 	}
 	
-	@Override
 	public void loadDAOs() throws SQLException, NamingException {
 		ResultSet rs = database.executeQuery(baseSql);
 		createBoards(rs);
@@ -49,12 +48,12 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	}
 	
 	public void loadLanes(Board board) throws SQLException, NamingException {
-		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(board);
-		databaseLaneDao.loadDAOs();
+		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO();
+		databaseLaneDao.loadDAOs(board);
 	}
 
 	public Lane loadLane(Board board, int laneId) throws NamingException, SQLException {
-		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(board);
+		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO();
 		return databaseLaneDao.loadLane(laneId);
 	}
 }

@@ -14,6 +14,7 @@ var initSortable = function () {
             $item.animate($clonedItem.position(), function  () {
                 $clonedItem.detach();
                 _super($item, container);
+                moveCard($item);
             });
         },
 
@@ -42,7 +43,7 @@ var initSortable = function () {
 var registerNewCardEvent = function() {
     $('textarea.newCard').on("keydown", function (e) {
       if (e.which == 13) {
-          createCard(this.parentNode.parentNode.parentNode, this.value);
+          createCard(getLane(this.parentNode), this.value);
          $("<li>").insertBefore($(this.parentNode.parentNode).find("li.newCard")).append(this.value);
           this.value = "";
           return false;
@@ -50,7 +51,16 @@ var registerNewCardEvent = function() {
     });
 };
 
+var moveCard = function(card) {
+    var lane = getLane($(card));
+    model.moveCard($(card).attr("card_id"), $(lane).attr("lane_id"));
+}
+
 var createCard = function(lane, content) {
     var laneId = $(lane).attr("lane_id");
     model.createCard(laneId, content);
 };
+
+var getLane = function(card) {
+    return card.parent().parent()
+}

@@ -14,16 +14,9 @@ import com.ntlx.board.Board;
 import com.ntlx.board.Boards;
 import com.ntlx.data.DatabaseBoardDAO;
 
-/**
- * Servlet implementation class Setup
- */
 @WebServlet("/getBoard")
 public class GetBoard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    /**
-     * Default constructor. 
-     */
 
 	DatabaseBoardDAO dbl;
 	

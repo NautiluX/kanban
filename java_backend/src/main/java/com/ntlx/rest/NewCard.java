@@ -20,17 +20,10 @@ import com.ntlx.data.DatabaseCardDAO;
 import com.ntlx.data.DatabaseLaneDAO;
 import com.ntlx.data.DatabaseUserDAO;
 
-/**
- * Servlet implementation class Setup
- */
+
 @WebServlet("/newCard")
 public class NewCard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    /**
-     * Default constructor. 
-     */
-
 	
     public NewCard() throws NamingException, SQLException {
 
@@ -54,7 +47,6 @@ public class NewCard extends HttpServlet {
 	}
 
 	private void createCard(String boardIdString, String laneIdString, String userName, String content) throws NamingException, SQLException {
-		// TODO Auto-generated method stub
 		if (!boardIdString.isEmpty() && !laneIdString.isEmpty() && !content.isEmpty()) {
 			int boardId = Integer.parseInt(boardIdString);
 			int laneId = Integer.parseInt(laneIdString);
@@ -72,7 +64,8 @@ public class NewCard extends HttpServlet {
 		DatabaseUserDAO userDao = new DatabaseUserDAO();
 		User owner = userDao.loadUser(userName);
 		
-		DatabaseCardDAO cardDao = new DatabaseCardDAO(lane);
-		cardDao.insertCard(lane, owner, content);
+		DatabaseCardDAO cardDao = new DatabaseCardDAO();
+		Card card = new Card(-1, owner, content, laneId);
+		cardDao.create(card);
 	}
 }

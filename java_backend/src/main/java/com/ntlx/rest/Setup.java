@@ -15,15 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ntlx.data.Database;
 
-/**
- * Servlet implementation class Setup
- */
 @WebServlet("/setup")
 public class Setup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    /**
-     * Default constructor. 
-     */
+
 	Database db;
 
     public Setup() {

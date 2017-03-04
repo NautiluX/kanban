@@ -26,4 +26,14 @@ Model.prototype.createCard = function(laneId, content) {
         });
 }
 
+Model.prototype.moveCard = function(cardId, newLaneId) {
+    $.post("/backend/moveCard", 
+        { "cardId": cardId,
+         "newLaneId": newLaneId},
+        function (data) {
+            model.updateModel();
+        });
+}
+
+
 var model = new Model();
