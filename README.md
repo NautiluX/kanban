@@ -5,8 +5,8 @@ After a simple docker-compose up -d the system shall be up and running (which is
 Not yet nearly running.
 
 #Setup
-In root directory: docker-compose up -d
-In java_backend directory: mvn tomcat7:deploy
+- In root directory: docker-compose up -d
+- In java_backend directory: mvn tomcat7:deploy
 
 #Current State
 - Create new cards
