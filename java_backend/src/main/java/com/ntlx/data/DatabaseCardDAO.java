@@ -18,8 +18,8 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 	String insertSql = "INSERT INTO CARDS (LANE_ID, OWNER_ID, CONTENT) VALUES (?, ?, ?)";
 	String updateSql = "UPDATE CARDS SET LANE_ID = ? WHERE CARD_ID = ?";
 	String deleteSql = "DELETE FROM CARDS WHERE CARD_ID = ?";
-	public DatabaseCardDAO() throws NamingException, SQLException {
-		super();
+	public DatabaseCardDAO(Database database) throws NamingException, SQLException {
+		super(database);
 	}
 
 	public void loadDAOs(Lane lane) throws SQLException {

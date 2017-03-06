@@ -15,8 +15,10 @@ import com.ntlx.board.Boards;
 import com.ntlx.board.Card;
 import com.ntlx.board.Lane;
 import com.ntlx.board.User;
+import com.ntlx.data.Database;
 import com.ntlx.data.DatabaseBoardDAO;
 import com.ntlx.data.DatabaseCardDAO;
+import com.ntlx.data.DatabaseDAOFactory;
 import com.ntlx.data.DatabaseLaneDAO;
 import com.ntlx.data.DatabaseUserDAO;
 
@@ -50,7 +52,7 @@ public class DeleteCard extends HttpServlet {
 	}
 
 	private void deleteCard(int cardId) throws NamingException, SQLException {
-		DatabaseCardDAO cardDao = new DatabaseCardDAO();
+		DatabaseCardDAO cardDao = DatabaseDAOFactory.createDatabaseCardDAO();
 		Card card = cardDao.loadCard(cardId);
 		
 		cardDao.delete(card);

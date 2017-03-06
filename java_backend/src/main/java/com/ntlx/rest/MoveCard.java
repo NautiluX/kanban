@@ -15,8 +15,10 @@ import com.ntlx.board.Boards;
 import com.ntlx.board.Card;
 import com.ntlx.board.Lane;
 import com.ntlx.board.User;
+import com.ntlx.data.Database;
 import com.ntlx.data.DatabaseBoardDAO;
 import com.ntlx.data.DatabaseCardDAO;
+import com.ntlx.data.DatabaseDAOFactory;
 import com.ntlx.data.DatabaseLaneDAO;
 import com.ntlx.data.DatabaseUserDAO;
 
@@ -52,10 +54,10 @@ public class MoveCard extends HttpServlet {
 	}
 
 	private void moveCard(int cardId, int newLaneId) throws NamingException, SQLException {
-		DatabaseCardDAO cardDao = new DatabaseCardDAO();
+		DatabaseCardDAO cardDao = DatabaseDAOFactory.createDatabaseCardDAO();
 		Card card = cardDao.loadCard(cardId);
 		
-		DatabaseLaneDAO laneDao = new DatabaseLaneDAO();
+		DatabaseLaneDAO laneDao = DatabaseDAOFactory.createDatabaseLaneDAO();
 		Lane lane = laneDao.loadLane(newLaneId);
 		
 		card.moveToLane(lane);

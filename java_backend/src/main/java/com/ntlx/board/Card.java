@@ -1,6 +1,7 @@
 package com.ntlx.board;
 
 public class Card {
+	public static final int NEW_CARD_ID = -1;
 	protected int id;
 	protected int afterCardId;
 	protected int laneId;

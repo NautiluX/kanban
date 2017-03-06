@@ -16,8 +16,8 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	
 	private String baseSql = "SELECT BOARD_ID, BOARD_NAME, USER_NAME, USER_ID FROM BOARDS INNER JOIN USERS ON BOARDS.OWNER_ID = USERS.USER_ID";
 	
-	public DatabaseBoardDAO() throws NamingException, SQLException {
-		super();
+	public DatabaseBoardDAO(Database database) throws NamingException, SQLException {
+		super(database);
 	}
 	
 	public void loadDAOs() throws SQLException, NamingException {
@@ -48,12 +48,12 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	}
 	
 	public void loadLanes(Board board) throws SQLException, NamingException {
-		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO();
+		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(database);
 		databaseLaneDao.loadDAOs(board);
 	}
 
 	public Lane loadLane(Board board, int laneId) throws NamingException, SQLException {
-		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO();
+		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(database);
 		return databaseLaneDao.loadLane(laneId);
 	}
 }

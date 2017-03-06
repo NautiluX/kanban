@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ntlx.board.Board;
 import com.ntlx.board.Boards;
+import com.ntlx.data.Database;
 import com.ntlx.data.DatabaseBoardDAO;
+import com.ntlx.data.DatabaseDAOFactory;
 
 @WebServlet("/getBoard")
 public class GetBoard extends HttpServlet {
@@ -26,7 +28,7 @@ public class GetBoard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
     	try {
-        	dbl = new DatabaseBoardDAO();
+        	dbl = DatabaseDAOFactory.createDatabaseBoardDAO();
 
 	    	String boardId = request.getParameter("id");
 			if (boardId == null) {

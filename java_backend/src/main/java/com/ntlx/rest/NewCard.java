@@ -15,8 +15,10 @@ import com.ntlx.board.Boards;
 import com.ntlx.board.Card;
 import com.ntlx.board.Lane;
 import com.ntlx.board.User;
+import com.ntlx.data.Database;
 import com.ntlx.data.DatabaseBoardDAO;
 import com.ntlx.data.DatabaseCardDAO;
+import com.ntlx.data.DatabaseDAOFactory;
 import com.ntlx.data.DatabaseLaneDAO;
 import com.ntlx.data.DatabaseUserDAO;
 
@@ -55,11 +57,11 @@ public class NewCard extends HttpServlet {
 	}
 
 	private void createCard(int boardId, int laneId, String content, String userName) throws NamingException, SQLException {
-		DatabaseUserDAO userDao = new DatabaseUserDAO();
+		DatabaseUserDAO userDao = DatabaseDAOFactory.createDatabaseUserDAO();
 		User owner = userDao.loadUser(userName);
 		
-		DatabaseCardDAO cardDao = new DatabaseCardDAO();
-		Card card = new Card(-1, owner, content, laneId);
+		DatabaseCardDAO cardDao = DatabaseDAOFactory.createDatabaseCardDAO();
+		Card card = new Card(Card.NEW_CARD_ID, owner, content, laneId);
 		cardDao.create(card);
 	}
 }
