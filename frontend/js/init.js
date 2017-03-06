@@ -31,8 +31,38 @@ var createLanes = function (lanes) {
         $('#lanes').append('<span class="lane" id="lane_' + lane.id + '" lane_id="' + lane.id + '">');
         $('#lane_'+lane.id).append('<h2>'+lane.title+'</h2>').append('<ol class="example" id="lane_' + lane.id + '_list">');
         lane.cards.forEach(function (card) {
-            $('#lane_'+lane.id+'_list').append('<li class="example" card_id="' + card.id + '">' + card.content + '</li>');
+            renderCard(lane, card);
         });
         $('#lane_'+lane.id+'_list').append(newCardListItem);
     });
 };
+
+var renderCard = function (lane, card) {
+    var cardHtml = renderCardListItem(card);
+    var cardContent = renderCardContent(card);
+    var deleteHtml = renderCardDeleteButton(card);
+    $('#lane_'+lane.id+'_list').append(cardHtml);
+    $('#card_' + card.id).append(cardContent);
+    $('#card_' + card.id).append(deleteHtml);
+};
+
+var renderCardListItem = function (card) {
+    var cardHtml = '<li class="example" card_id="' + card.id + '" id="card_' + card.id + '">';
+    cardHtml += '</li>';
+    return cardHtml;
+};
+var renderCardContent = function (card) {
+    cardHtml = '<div class="cardContent">';
+    cardHtml += card.content;
+    cardHtml += '</div>';
+    return cardHtml;
+};
+
+var renderCardDeleteButton = function (card) {
+    deleteHtml = '<button class="deleteCard">';
+    deleteHtml += '<i class="deleteCard material-icons" card_id="' + card.id + '" id="delete_card_' + card.id + '">delete</i>';
+    deleteHtml += '</button>';
+    var deleteButton = $(deleteHtml);
+    deleteButton.on("click", function (e) {model.deleteCard(card);});
+    return deleteButton;
+}

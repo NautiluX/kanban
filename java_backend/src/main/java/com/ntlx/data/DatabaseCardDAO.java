@@ -17,6 +17,7 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 
 	String insertSql = "INSERT INTO CARDS (LANE_ID, OWNER_ID, CONTENT) VALUES (?, ?, ?)";
 	String updateSql = "UPDATE CARDS SET LANE_ID = ? WHERE CARD_ID = ?";
+	String deleteSql = "DELETE FROM CARDS WHERE CARD_ID = ?";
 	public DatabaseCardDAO() throws NamingException, SQLException {
 		super();
 	}
@@ -65,9 +66,6 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 		return card;
 	}
 
-	public void insertCard(Lane lane, User owner, String content) throws SQLException {
-	}
-
 	public void update(Card card) throws SQLException {
 		PreparedStatement statement = database.prepareStatement(updateSql);
 		statement.setInt(1, card.getLaneId());
@@ -80,6 +78,12 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 		statement.setInt(1, card.getLaneId());
 		statement.setInt(2, card.getOnwerId());
 		statement.setString(3, card.getContent());
+		statement.executeUpdate();
+	}
+
+	public void delete(Card card) throws SQLException {
+		PreparedStatement statement = database.prepareStatement(deleteSql);
+		statement.setInt(1, card.getId());
 		statement.executeUpdate();
 	}
 }

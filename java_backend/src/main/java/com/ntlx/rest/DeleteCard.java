@@ -20,23 +20,19 @@ import com.ntlx.data.DatabaseCardDAO;
 import com.ntlx.data.DatabaseLaneDAO;
 import com.ntlx.data.DatabaseUserDAO;
 
-
-@WebServlet("/newCard")
-public class NewCard extends HttpServlet {
+@WebServlet("/deleteCard")
+public class DeleteCard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-    public NewCard() throws NamingException, SQLException {
+    public DeleteCard() throws NamingException, SQLException {
 
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        String userName = request.getUserPrincipal().getName();
     	try {
-    		String boardIdString = request.getParameter("boardId");
-    		String laneIdString = request.getParameter("laneId");
-    		String content = request.getParameter("content");
-    		createCard(boardIdString, laneIdString, userName, content);
+    		String cardIdString = request.getParameter("cardId");
+    		deleteCard(cardIdString);
     		response.getWriter().append("{\"status\":\"success\"}");
     	} catch (SQLException e) {
 			response.getWriter().append("SQL Error: " + e.getMessage());
@@ -46,20 +42,17 @@ public class NewCard extends HttpServlet {
 		}
 	}
 
-	private void createCard(String boardIdString, String laneIdString, String userName, String content) throws NamingException, SQLException {
-		if (!boardIdString.isEmpty() && !laneIdString.isEmpty() && !content.isEmpty()) {
-			int boardId = Integer.parseInt(boardIdString);
-			int laneId = Integer.parseInt(laneIdString);
-			createCard(boardId, laneId, content, userName);		
+	private void deleteCard(String cardIdString) throws NamingException, SQLException {
+		if (!cardIdString.isEmpty()) {
+			int cardId = Integer.parseInt(cardIdString);
+			deleteCard(cardId);
 		}
 	}
 
-	private void createCard(int boardId, int laneId, String content, String userName) throws NamingException, SQLException {
-		DatabaseUserDAO userDao = new DatabaseUserDAO();
-		User owner = userDao.loadUser(userName);
-		
+	private void deleteCard(int cardId) throws NamingException, SQLException {
 		DatabaseCardDAO cardDao = new DatabaseCardDAO();
-		Card card = new Card(-1, owner, content, laneId);
-		cardDao.create(card);
+		Card card = cardDao.loadCard(cardId);
+		
+		cardDao.delete(card);
 	}
 }

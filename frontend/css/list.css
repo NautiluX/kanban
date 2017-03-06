@@ -131,3 +131,27 @@ h2 {
     margin: 0px;
     margin-bottom: 10px;
 }
+
+div.cardContent {
+    width: calc(100% - 25px);
+    padding: 0px;
+    margin: 0px;
+    display: inline-block;
+}
+
+button.deleteCard {
+    width: 11px;
+    display: inline-block;
+    border: 0px solid #000;
+    background-color: transparent;
+    cursor: pointer;
+    color:#0090d2;
+}
+
+button.deleteCard:hover {
+    color: #ffffff;
+}
+
+i.deleteCard {
+    font-size:17pt;
+}

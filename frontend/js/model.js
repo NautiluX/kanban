@@ -24,7 +24,7 @@ Model.prototype.createCard = function(laneId, content) {
         function (data) {
             model.updateModel();
         });
-}
+};
 
 Model.prototype.moveCard = function(cardId, newLaneId) {
     $.post("/backend/moveCard", 
@@ -33,7 +33,14 @@ Model.prototype.moveCard = function(cardId, newLaneId) {
         function (data) {
             model.updateModel();
         });
-}
+};
 
+Model.prototype.deleteCard = function(card) {
+    $.post("/backend/deleteCard", 
+        { "cardId": card.id },
+        function (data) {
+            model.updateModel();
+        });
+}
 
 var model = new Model();

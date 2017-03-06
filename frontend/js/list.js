@@ -52,7 +52,7 @@ var registerNewCardEvent = function() {
 };
 
 var moveCard = function(card) {
-    var lane = getLane($(card));
+    var lane = getLane(card);
     model.moveCard($(card).attr("card_id"), $(lane).attr("lane_id"));
 }
 
@@ -62,5 +62,5 @@ var createCard = function(lane, content) {
 };
 
 var getLane = function(card) {
-    return card.parent().parent()
+    return $(card).parent().parent()
 }
