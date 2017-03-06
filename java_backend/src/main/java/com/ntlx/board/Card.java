@@ -31,7 +31,7 @@ public class Card {
 		laneId = lane.getId();
 	}
 
-	public int getOnwerId() {
+	public int getOwnerId() {
 		return owner.getId();
 	}
 

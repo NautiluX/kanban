@@ -76,7 +76,7 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 	public void create(Card card) throws SQLException {
 		PreparedStatement statement = database.prepareStatement(insertSql);
 		statement.setInt(1, card.getLaneId());
-		statement.setInt(2, card.getOnwerId());
+		statement.setInt(2, card.getOwnerId());
 		statement.setString(3, card.getContent());
 		statement.executeUpdate();
 	}
