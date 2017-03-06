@@ -11,9 +11,9 @@ public abstract class DatabaseDAO<DAOType> {
 	private HashMap<Integer, DAOType> daos = null;
 	protected Database database = null;
 
-	public DatabaseDAO(Database database) throws NamingException, SQLException {
+	public DatabaseDAO(Database db) throws NamingException, SQLException {
 		daos = new HashMap<Integer, DAOType>();
-		this.database = database;
+		this.database = db;
 	}
 
 	protected void addDAO(int id, DAOType dao) {

@@ -14,8 +14,8 @@ public class DatabaseLaneDAO extends DatabaseDAO<Lane>{
 	private String boardLanesSql = baseSql + " WHERE BOARD_ID = ?";
 	private String singleLaneSql = baseSql + " WHERE LANE_ID = ?";
 	
-	public DatabaseLaneDAO(Database database) throws NamingException, SQLException {
-		super(database);
+	public DatabaseLaneDAO(Database db) throws NamingException, SQLException {
+		super(db);
 	}
 
 	

@@ -13,8 +13,8 @@ import com.ntlx.board.User;
 public class DatabaseUserDAO extends DatabaseDAO<User> {
 	String baseSql = "SELECT USER_ID, USER_NAME FROM USERS";
 	String singleSql = baseSql + " WHERE USER_NAME = ?";
-	public DatabaseUserDAO(Database database) throws NamingException, SQLException {
-		super(database);
+	public DatabaseUserDAO(Database db) throws NamingException, SQLException {
+		super(db);
 	}
 
 	public void loadDAOs() throws SQLException {

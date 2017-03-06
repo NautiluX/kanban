@@ -16,8 +16,8 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	
 	private String baseSql = "SELECT BOARD_ID, BOARD_NAME, USER_NAME, USER_ID FROM BOARDS INNER JOIN USERS ON BOARDS.OWNER_ID = USERS.USER_ID";
 	
-	public DatabaseBoardDAO(Database database) throws NamingException, SQLException {
-		super(database);
+	public DatabaseBoardDAO(Database db) throws NamingException, SQLException {
+		super(db);
 	}
 	
 	public void loadDAOs() throws SQLException, NamingException {

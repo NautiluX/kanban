@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ntlx.data.Database;
+import com.ntlx.data.ProductiveDatabase;
 
 @WebServlet("/setup")
 public class Setup extends HttpServlet {
@@ -25,7 +26,7 @@ public class Setup extends HttpServlet {
     }
     
     public void executeSetup() throws SQLException, NamingException{
-    	db = Database.getInstance();
+    	db = ProductiveDatabase.getInstance();
 		deleteTablesIfExisting();
     	createTables();
     	createInitialData();
