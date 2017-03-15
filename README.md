@@ -4,12 +4,12 @@ After a simple docker-compose up -d the system shall be up and running (which is
 
 Not yet nearly running.
 
-#Setup
+##Setup
 - In root directory: docker-compose up -d
 - In java_backend directory: mvn tomcat7:deploy
 - go to localhost:3333/backend/setup
 - go to localhost:3333
 
-#Current State
+##Current State
 - Create new cards
 - Drag cards from one lane to another
