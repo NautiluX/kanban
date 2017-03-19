@@ -6,8 +6,6 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
-import com.ntlx.board.Card;
-import com.ntlx.board.Lane;
 import com.ntlx.board.User;
 
 public class DatabaseUserDAO extends DatabaseDAO<User> {

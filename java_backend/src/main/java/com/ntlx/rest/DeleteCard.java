@@ -6,21 +6,11 @@ import java.sql.SQLException;
 import javax.servlet.annotation.WebServlet;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ntlx.board.Board;
-import com.ntlx.board.Boards;
 import com.ntlx.board.Card;
-import com.ntlx.board.Lane;
-import com.ntlx.board.User;
-import com.ntlx.data.ProductiveDatabase;
-import com.ntlx.data.DatabaseBoardDAO;
 import com.ntlx.data.DatabaseCardDAO;
-import com.ntlx.data.ProductiveDatabaseDAOFactory;
-import com.ntlx.data.DatabaseLaneDAO;
-import com.ntlx.data.DatabaseUserDAO;
 
 @WebServlet("/deleteCard")
 public class DeleteCard extends KanbanServlet {
