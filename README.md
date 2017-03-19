@@ -25,3 +25,8 @@ The system shall be accessible for mobile devices as well as any web browser.
 - (planned) Assign cards to different users
 - (planned) Smart boards for labels
 - (planned) Registration self service
+
+## Get Involved
+You want to stay up to date with this project? Sign up to our mailing list to stay up to date with what's going on. Every change in this project is communicated to this mailing list.
+
+[https://groups.google.com/forum/#!forum/projectyukan]
