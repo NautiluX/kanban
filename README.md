@@ -1,6 +1,9 @@
 # Project YuKan
 Find gold in your daily work!
-The goal of this project is to provide a kanban board that can be used for both personal and business work. We want to enable the user to show tasks from differnt origins (aka. backends) which may be located in a protected network due to potential confidentiality of the data in the tasks themselves. Other tasks with less confidentiallity the user may want to store in a location where they can be accessed anytime. The system is implemented as a web service which can be accessed from mobile devices as well as from the users personal computer.
+
+The goal of this project is to provide a kanban board that can be used for both personal and business work. We want to enable the user to show tasks from differnt origins (aka. backends) which may be located in a protected network due to potential confidentiality of the data in the tasks themselves. Other tasks with less confidentiallity the user may want to store in a location where they can be accessed anytime.
+
+The system shall be accessible for mobile devices as well as any web browser.
 
 ## Setup
 - In root directory: docker-compose up -d
