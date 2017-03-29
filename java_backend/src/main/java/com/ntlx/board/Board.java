@@ -8,13 +8,15 @@ public class Board{
 	protected String name;
 	protected int id;
 	protected User owner;
+	private boolean isWorldReadable;
 	protected Vector<Lane> lanes;
 	
-	public Board(int id, String name, User owner) {
+	public Board(int id, String name, User owner, boolean isWorldReadable) {
 		this.name = name;
 		this.id = id;
 		this.owner = owner;
 		this.lanes = new Vector<Lane>();
+		this.isWorldReadable = isWorldReadable;
 	}
 	
 	public String getName() {
@@ -40,5 +42,9 @@ public class Board{
 	public String toString() {
 		Gson gson = new Gson();
 		return gson.toJson(this);
+	}
+
+	public boolean isWorldReadable() {
+		return this.isWorldReadable;
 	}
 }

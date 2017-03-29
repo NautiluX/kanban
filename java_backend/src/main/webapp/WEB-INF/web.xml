@@ -34,7 +34,11 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>*</web-resource-name>
-			<url-pattern>/*</url-pattern>
+			<url-pattern>/getBoard</url-pattern>
+			<url-pattern>/moveCard</url-pattern>
+			<url-pattern>/newCard</url-pattern>
+			<url-pattern>/setup</url-pattern>
+			<url-pattern>/deleteCard</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 		</web-resource-collection>

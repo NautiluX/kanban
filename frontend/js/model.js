@@ -11,6 +11,12 @@ Model.prototype.loadBoard = function(id) {
     });
 };
 
+Model.prototype.loadBoardWorldReadable = function(id) {
+    $.get( "/backend/getBoardWorldReadable?id="+id, function( board ) {
+        model.updateSelectedBoard(board);
+    });
+};
+
 Model.prototype.updateSelectedBoard = function(board) {
     selectedBoard = board;
     renderBoard(board);

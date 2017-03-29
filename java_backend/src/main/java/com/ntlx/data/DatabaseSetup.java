@@ -46,7 +46,7 @@ public class DatabaseSetup {
     public void createTables() throws NamingException, SQLException{
 		db.executeUpdate("CREATE TABLE USERS (USER_ID INTEGER NOT NULL " + autoIncrement + ", USER_NAME NVARCHAR(200), PASSWORD NVARCHAR(200),  " + primaryKey  + " (USER_ID))");
     	db.executeUpdate("CREATE TABLE USER_ROLES (USER_NAME NVARCHAR(200), ROLE_NAME NVARCHAR(200), PRIMARY KEY (USER_NAME, ROLE_NAME))");
-    	db.executeUpdate("CREATE TABLE BOARDS (BOARD_ID INTEGER NOT NULL " + autoIncrement + ", BOARD_NAME NVARCHAR(200), OWNER_ID INTEGER NOT NULL, " + primaryKey  + " (BOARD_ID))");
+    	db.executeUpdate("CREATE TABLE BOARDS (BOARD_ID INTEGER NOT NULL " + autoIncrement + ", BOARD_NAME NVARCHAR(200), OWNER_ID INTEGER NOT NULL, WORLD_READABLE INTEGER, " + primaryKey  + " (BOARD_ID))");
     	db.executeUpdate("CREATE TABLE LANES (LANE_ID INTEGER NOT NULL " + autoIncrement + ", BOARD_ID INTEGER NOT NULL, TITLE NVARCHAR(5000), AFTER_LANE_ID INTEGER, " + primaryKey  + " (LANE_ID))");
     	db.executeUpdate("CREATE TABLE CARDS (CARD_ID INTEGER NOT NULL " + autoIncrement + ", LANE_ID INTEGER NOT NULL, OWNER_ID INTEGER NOT NULL, AFTER_CARD_ID INTEGER, CONTENT NVARCHAR(5000), " + primaryKey  + " (CARD_ID))");
     	db.executeUpdate("CREATE TABLE TAGS (TAG_ID INTEGER NOT NULL " + autoIncrement + ", TEXT NVARCHAR(5000), " + primaryKey  + " (TAG_ID))");
@@ -58,7 +58,7 @@ public class DatabaseSetup {
 
     	db.executeUpdate("INSERT INTO USER_ROLES (USER_NAME, ROLE_NAME) VALUES ('example_user', 'kanban_user')");
     	
-    	db.executeUpdate("INSERT INTO BOARDS (BOARD_NAME, OWNER_ID) VALUES ('Default Board', 1)");
+    	db.executeUpdate("INSERT INTO BOARDS (BOARD_NAME, OWNER_ID, WORLD_READABLE) VALUES ('Default Board', 1, 1)");
     	
     	db.executeUpdate("INSERT INTO LANES (BOARD_ID, AFTER_LANE_ID, TITLE) VALUES (1, NULL, 'Backlog')");
     	db.executeUpdate("INSERT INTO LANES (BOARD_ID, AFTER_LANE_ID, TITLE) VALUES (1, 1, 'Ready')");

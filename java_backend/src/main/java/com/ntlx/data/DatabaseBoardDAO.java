@@ -14,7 +14,7 @@ import com.ntlx.board.Lane;
 
 public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	
-	private String baseSql = "SELECT BOARD_ID, BOARD_NAME, USER_NAME, USER_ID FROM BOARDS INNER JOIN USERS ON BOARDS.OWNER_ID = USERS.USER_ID";
+	private String baseSql = "SELECT BOARD_ID, BOARD_NAME, USER_NAME, USER_ID, WORLD_READABLE FROM BOARDS INNER JOIN USERS ON BOARDS.OWNER_ID = USERS.USER_ID";
 	
 	public DatabaseBoardDAO(Database db) throws NamingException, SQLException {
 		super(db);
@@ -41,7 +41,8 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	public void createBoards(ResultSet rs) throws SQLException, NamingException {
 		while (rs.next()) {
 			User owner = new User(rs.getInt("USER_ID"), rs.getString("USER_NAME"));
-			Board board = new Board(rs.getInt("BOARD_ID"), rs.getString("BOARD_NAME"), owner);
+			boolean isWorldReadable = rs.getInt("WORLD_READABLE") == 1;
+			Board board = new Board(rs.getInt("BOARD_ID"), rs.getString("BOARD_NAME"), owner, isWorldReadable);
 			loadLanes(board);
 			addDAO(board.getId(), board);
 		}
