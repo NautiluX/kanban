@@ -24,11 +24,13 @@ Password: secret
 - Create new cards
 - Drag cards from one lane to another
 - Delete cards
-- (planned) World-readable boards (share-by-link)
+- World-readable boards
+- (planned) Load board (share-by-link)
 - (planned) Label cards using #label in content
 - (planned) Filter by label
 - (planned) Comment cards
 - (planned) Create boards
+- (planned) Board overview, select board
 - (planned) Connect to boards from different backends (private, cloud, corporate)
 - (planned) Share boards
 - (planned) Assign cards to different users
