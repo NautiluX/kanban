@@ -13,6 +13,7 @@ The system shall be accessible for mobile devices as well as any web browser.
 
 ## Test User Credentials
 Username: example_user
+
 Password: secret
 
 ## Features
