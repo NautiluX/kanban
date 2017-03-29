@@ -11,7 +11,7 @@ The system shall be accessible for mobile devices as well as any web browser.
 - go to *localhost:3333/backend/setup*
 - go to *localhost:3333*
 
-##Test User Credentials
+## Test User Credentials
 Username: example_user
 Password: secret
 
