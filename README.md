@@ -26,7 +26,8 @@ Password: secret
 - Delete cards
 - World-readable boards
 - Load board (share-by-link)
-- (planned) separate URL for World-Readable
+- (planned) Setup for platforms that don't support docker
+- (planned) Separate URL for World-Readable
 - (planned) Label cards using #label in content
 - (planned) Filter by label
 - (planned) Comment cards
