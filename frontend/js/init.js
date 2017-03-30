@@ -1,5 +1,6 @@
 $( document ).ready(function() {
-    loadDefaultBoard();
+    var app = new App();
+    app.loadDefaultBoard();
 });
 
 var renderBoard = function (board) {

@@ -13,6 +13,8 @@ import com.ntlx.board.Board;
 import com.ntlx.board.Boards;
 import com.ntlx.data.DatabaseBoardDAO;
 import com.ntlx.exception.AuthorizationException;
+import com.ntlx.exception.BoardNotFoundException;
+import com.ntlx.exception.BoardNotWorldReadable;
 
 @WebServlet("/getBoard")
 public class GetBoard extends KanbanServlet {
@@ -44,7 +46,10 @@ public class GetBoard extends KanbanServlet {
  		} catch (AuthorizationException e) {
  			response.getWriter().append("Authorization Error: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
- 		}
+ 		} catch (BoardNotFoundException e) {
+ 			response.getWriter().append("Error loading Board: " + e.getMessage());
+ 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}
 	}
 
 	protected void returnAllBoards(HttpServletResponse response) throws SQLException, IOException, NamingException {
@@ -53,12 +58,16 @@ public class GetBoard extends KanbanServlet {
 		response.getOutputStream().print(boards.toString());
 	}
 	
-	protected void returnBoard(HttpServletResponse response, int id) throws SQLException, IOException, NamingException, AuthorizationException {
+	protected void returnBoard(HttpServletResponse response, int id) throws SQLException, IOException, NamingException, AuthorizationException, BoardNotFoundException {
 		Board board = dbl.loadSingleDAO(id);
 		if (board != null) {
-			response.getOutputStream().print(board.toString());
+			printBoard(response, board);
 		} else {
-			response.getOutputStream().print("Board not found: " + id);
+			throw new BoardNotFoundException(id);
 		}
+	}
+	
+	protected void printBoard(HttpServletResponse response, Board board) throws IOException, BoardNotWorldReadable {
+		response.getOutputStream().print(board.toString());
 	}
 }
