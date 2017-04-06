@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ntlx.board.Board;
-import com.ntlx.exception.BoardNotWorldReadable;
+import com.ntlx.exception.BoardNotReadableException;
 
 @WebServlet("/getBoardWorldReadable")
 public class GetBoardWorldReadable extends GetBoard {
@@ -20,11 +20,11 @@ public class GetBoardWorldReadable extends GetBoard {
 	}
 	
 	@Override
-	protected void printBoard(HttpServletResponse response, Board board) throws IOException, BoardNotWorldReadable {
-		if (board.isWorldReadable()) {
+	protected void printBoard(HttpServletResponse response, Board board) throws IOException, BoardNotReadableException {
+		if (board.isReadable()) {
 			response.getOutputStream().print(board.toString());
 		} else {
-			throw new BoardNotWorldReadable();
+			throw new BoardNotReadableException();
 		}
 	}
 }

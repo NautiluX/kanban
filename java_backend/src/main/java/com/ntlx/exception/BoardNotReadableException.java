@@ -1,6 +1,6 @@
 package com.ntlx.exception;
 
-public class BoardNotWorldReadable extends AuthorizationException {
+public class BoardNotReadableException extends AuthorizationException {
 	private static final long serialVersionUID = 1L;
 
 	public String getMessage() {

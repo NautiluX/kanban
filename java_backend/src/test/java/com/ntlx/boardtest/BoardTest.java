@@ -39,14 +39,14 @@ public class BoardTest {
 	public void testGetLanesJson() 
 	{
 		Board boardWithLanes = BoardTestUtils.createBoardWith3Lanes();
-		String json = "{\"name\":\"Test Board\",\"id\":1,\"owner\":{\"id\":1,\"name\":\"Test User\"},\"isWorldReadable\":true,\"lanes\":[{\"id\":1,\"title\":\"Test Lane\",\"cards\":[]},{\"id\":1,\"title\":\"Test Lane\",\"cards\":[]},{\"id\":1,\"title\":\"Test Lane\",\"cards\":[]}]}";
+		String json = "{\"name\":\"Test Board\",\"id\":1,\"owner\":{\"id\":1,\"name\":\"Test User\"},\"lanes\":[{\"id\":1,\"title\":\"Test Lane\",\"cards\":[]},{\"id\":1,\"title\":\"Test Lane\",\"cards\":[]},{\"id\":1,\"title\":\"Test Lane\",\"cards\":[]}],\"permissions\":[\"READ\"]}";
 		Assert.assertEquals(json, boardWithLanes.toString());
 	}
 	
 	@Test
 	public void testToJson()
 	{
-		String json = "{\"name\":\"Test Board\",\"id\":1,\"owner\":{\"id\":1,\"name\":\"Test User\"},\"isWorldReadable\":true,\"lanes\":[]}";
+		String json = "{\"name\":\"Test Board\",\"id\":1,\"owner\":{\"id\":1,\"name\":\"Test User\"},\"lanes\":[],\"permissions\":[\"READ\"]}";
 		Assert.assertEquals(json, board.toString());
 	}
 }

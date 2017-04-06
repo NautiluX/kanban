@@ -1,5 +1,6 @@
 package com.ntlx.board;
 
+import java.util.HashSet;
 import java.util.Vector;
 
 import com.google.gson.Gson;
@@ -8,15 +9,15 @@ public class Board{
 	protected String name;
 	protected int id;
 	protected User owner;
-	private boolean isWorldReadable;
 	protected Vector<Lane> lanes;
+	protected HashSet<String> permissions;
 	
-	public Board(int id, String name, User owner, boolean isWorldReadable) {
+	public Board(int id, String name, User owner, HashSet<String> permissions) {
 		this.name = name;
 		this.id = id;
 		this.owner = owner;
 		this.lanes = new Vector<Lane>();
-		this.isWorldReadable = isWorldReadable;
+		this.permissions = permissions;
 	}
 	
 	public String getName() {
@@ -44,7 +45,11 @@ public class Board{
 		return gson.toJson(this);
 	}
 
-	public boolean isWorldReadable() {
-		return this.isWorldReadable;
+	public boolean isReadable() {
+		return hasPermission(Permissions.READ);
+	}
+
+	private boolean hasPermission(String permission) {
+		return permissions.contains(permission);
 	}
 }

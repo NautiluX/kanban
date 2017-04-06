@@ -5,12 +5,16 @@ import java.sql.PreparedStatement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.naming.NamingException;
 
 import com.ntlx.board.Board;
 import com.ntlx.board.User;
 import com.ntlx.board.Lane;
+import com.ntlx.board.Permissions;
 
 public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	
@@ -20,14 +24,14 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 		super(db);
 	}
 	
-	public void loadDAOs() throws SQLException, NamingException {
+	public void loadDAOs(User user) throws SQLException, NamingException {
 		ResultSet rs = database.executeQuery(baseSql);
-		createBoards(rs);
+		createBoards(rs, user);
 	}
 
-	public Board loadSingleDAO(int id) throws SQLException, NamingException {
+	public Board loadSingleDAO(int id, User user) throws SQLException, NamingException {
 		ResultSet rs = executeSingleBoardQuery(id);
-		createBoards(rs);
+		createBoards(rs, user);
 		return getDAO(id);
 	}
 	
@@ -38,16 +42,31 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 		return rs;
 	}
 	
-	public void createBoards(ResultSet rs) throws SQLException, NamingException {
+	public void createBoards(ResultSet rs, User user) throws SQLException, NamingException {
 		while (rs.next()) {
 			User owner = new User(rs.getInt("USER_ID"), rs.getString("USER_NAME"));
 			boolean isWorldReadable = rs.getInt("WORLD_READABLE") == 1;
-			Board board = new Board(rs.getInt("BOARD_ID"), rs.getString("BOARD_NAME"), owner, isWorldReadable);
+			HashSet<String> permissions = getBoardPermissions(isWorldReadable, user, owner);
+			Board board = new Board(rs.getInt("BOARD_ID"), rs.getString("BOARD_NAME"), owner, permissions);
 			loadLanes(board);
 			addDAO(board.getId(), board);
 		}
 	}
 	
+	private HashSet<String> getBoardPermissions(boolean isWorldReadable, User user, User owner) {
+		HashSet<String> permissions = new HashSet<String>();
+		if (isWorldReadable) {
+			permissions.add(Permissions.READ);
+		}
+		if (user.getId() == owner.getId())
+		{
+			permissions.add(Permissions.MANAGE);
+			permissions.add(Permissions.CONTRIBUTE);
+			permissions.add(Permissions.READ);
+		}
+		return permissions;
+	}
+
 	public void loadLanes(Board board) throws SQLException, NamingException {
 		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(database);
 		databaseLaneDao.loadDAOs(board);

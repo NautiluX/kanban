@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ntlx.board.Card;
+import com.ntlx.board.User;
 import com.ntlx.data.DatabaseCardDAO;
 
 @WebServlet("/deleteCard")
@@ -19,19 +20,12 @@ public class DeleteCard extends KanbanServlet {
     public DeleteCard() throws NamingException, SQLException {
 
     }
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
-    	try {
-    		String cardIdString = request.getParameter("cardId");
-    		deleteCard(cardIdString);
-    		response.getWriter().append("{\"status\":\"success\"}");
-    	} catch (SQLException e) {
-			response.getWriter().append("SQL Error: " + e.getMessage());
-			e.printStackTrace(response.getWriter());			
-		} catch (NamingException e) {
-			response.getWriter().append("Naming Error: " + e.getMessage());
-		}
+
+    @Override
+    protected void doKanbanPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, NamingException, SQLException {
+		String cardIdString = request.getParameter("cardId");
+		deleteCard(cardIdString);
+		response.getWriter().append("{\"status\":\"success\"}");
 	}
 
 	private void deleteCard(String cardIdString) throws NamingException, SQLException {

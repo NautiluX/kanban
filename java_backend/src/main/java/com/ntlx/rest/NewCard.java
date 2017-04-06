@@ -23,21 +23,14 @@ public class NewCard extends KanbanServlet {
 
     }
     
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
+    @Override
+    protected void doKanbanPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, NamingException, SQLException {
         String userName = request.getUserPrincipal().getName();
-    	try {
-    		String boardIdString = request.getParameter("boardId");
-    		String laneIdString = request.getParameter("laneId");
-    		String content = request.getParameter("content");
-    		createCard(boardIdString, laneIdString, userName, content);
-    		response.getWriter().append("{\"status\":\"success\"}");
-    	} catch (SQLException e) {
-			response.getWriter().append("SQL Error: " + e.getMessage());
-			e.printStackTrace(response.getWriter());			
-		} catch (NamingException e) {
-			response.getWriter().append("Naming Error: " + e.getMessage());
-		}
+		String boardIdString = request.getParameter("boardId");
+		String laneIdString = request.getParameter("laneId");
+		String content = request.getParameter("content");
+		createCard(boardIdString, laneIdString, userName, content);
+		response.getWriter().append("{\"status\":\"success\"}");
 	}
 
 	private void createCard(String boardIdString, String laneIdString, String userName, String content) throws NamingException, SQLException {
