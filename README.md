@@ -44,3 +44,7 @@ Password: secret
 You want to stay up to date with this project? Sign up to our mailing list to stay up to date with what's going on. Every change in this project is communicated to this mailing list.
 
 [https://groups.google.com/forum/#!forum/projectyukan]
+
+## License
+
+This software is published under the MIT license, see [https://github.com/NautiluX/yukan/blob/master/LICENSE]
