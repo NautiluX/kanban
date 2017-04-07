@@ -46,7 +46,7 @@ public class NewCard extends KanbanServlet {
 		User owner = userDao.loadUser(userName);
 		
 		DatabaseCardDAO cardDao = databaseDaoFactory.createDatabaseCardDAO();
-		Card card = new Card(Card.NEW_CARD_ID, owner, content, laneId);
+		Card card = new Card(Card.NEW_CARD_ID, owner, content, laneId, boardId);
 		cardDao.create(card);
 	}
 }

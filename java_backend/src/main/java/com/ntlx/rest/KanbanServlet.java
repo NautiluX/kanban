@@ -43,10 +43,12 @@ public abstract class KanbanServlet extends HttpServlet {
 			User user = getUser(request);
 			doKanbanPost(request, response, user);
 		} catch (SQLException e) {
+ 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			response.getWriter().append("SQL Error: " + e.getMessage());
-			e.printStackTrace(response.getWriter());			
+			e.printStackTrace(response.getWriter());
 		} catch (NamingException e) {
 			response.getWriter().append("Naming Error: " + e.getMessage());
+ 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (BoardNotFoundException e) {
  			response.getWriter().append("Error loading Board: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -63,10 +65,12 @@ public abstract class KanbanServlet extends HttpServlet {
 			User user = getUser(request);
 			doKanbanGet(request, response, user);
 		} catch (SQLException e) {
+ 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			response.getWriter().append("SQL Error: " + e.getMessage());
-			e.printStackTrace(response.getWriter());			
+			e.printStackTrace(response.getWriter());
 		} catch (NamingException e) {
 			response.getWriter().append("Naming Error: " + e.getMessage());
+ 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (BoardNotFoundException e) {
  			response.getWriter().append("Error loading Board: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_NOT_FOUND);

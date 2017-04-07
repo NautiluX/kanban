@@ -49,6 +49,10 @@ public class Board{
 		return hasPermission(Permissions.READ);
 	}
 
+	public boolean isContributable() {
+		return hasPermission(Permissions.CONTRIBUTE);
+	}
+
 	private boolean hasPermission(String permission) {
 		return permissions.contains(permission);
 	}

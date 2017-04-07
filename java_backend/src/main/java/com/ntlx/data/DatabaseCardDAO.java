@@ -6,16 +6,19 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
+import com.ntlx.board.Board;
 import com.ntlx.board.Card;
 import com.ntlx.board.Lane;
 import com.ntlx.board.User;
+import com.ntlx.exception.AuthorizationException;
+import com.ntlx.exception.DeleteNotAllowedException;
 
 public class DatabaseCardDAO extends DatabaseDAO<Card> {
-	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, USER_NAME FROM CARDS INNER JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID";
+	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME FROM CARDS INNER JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID";
 	String laneCardsSql = baseSql + " WHERE LANE_ID = ?";
 	String singleCardSql = baseSql + " WHERE CARD_ID = ?";
 
-	String insertSql = "INSERT INTO CARDS (LANE_ID, OWNER_ID, CONTENT) VALUES (?, ?, ?)";
+	String insertSql = "INSERT INTO CARDS (BOARD_ID, LANE_ID, OWNER_ID, CONTENT) VALUES (?, ?, ?, ?)";
 	String updateSql = "UPDATE CARDS SET LANE_ID = ? WHERE CARD_ID = ?";
 	String deleteSql = "DELETE FROM CARDS WHERE CARD_ID = ?";
 	public DatabaseCardDAO(Database database) throws NamingException, SQLException {
@@ -58,7 +61,7 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 	}
 
 	private Card createCardFromResultSet(ResultSet rs, User owner) throws SQLException {
-		Card card = new Card(rs.getInt("CARD_ID"), owner, rs.getString("CONTENT"), rs.getInt("LANE_ID"));
+		Card card = new Card(rs.getInt("CARD_ID"), owner, rs.getString("CONTENT"), rs.getInt("LANE_ID"), rs.getInt("BOARD_ID"));
 		int afterCardId = rs.getInt("AFTER_CARD_ID");
 		if (!rs.wasNull()) {
 			card.setAfterCardId(afterCardId);
@@ -75,13 +78,21 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 
 	public void create(Card card) throws SQLException {
 		PreparedStatement statement = database.prepareStatement(insertSql);
-		statement.setInt(1, card.getLaneId());
-		statement.setInt(2, card.getOwnerId());
-		statement.setString(3, card.getContent());
+		statement.setInt(1, card.getBoardId());
+		statement.setInt(2, card.getLaneId());
+		statement.setInt(3, card.getOwnerId());
+		statement.setString(4, card.getContent());
 		statement.executeUpdate();
 	}
+	
+	public void delete(Board board, Card card) throws SQLException, AuthorizationException {
+		if (board.isContributable())
+			delete(card);
+		else
+			throw new DeleteNotAllowedException();
+	}
 
-	public void delete(Card card) throws SQLException {
+	private void delete(Card card) throws SQLException {
 		PreparedStatement statement = database.prepareStatement(deleteSql);
 		statement.setInt(1, card.getId());
 		statement.executeUpdate();

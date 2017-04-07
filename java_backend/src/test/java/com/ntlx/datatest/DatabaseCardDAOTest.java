@@ -8,19 +8,55 @@ import javax.naming.NamingException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.ntlx.board.Board;
 import com.ntlx.board.Card;
+import com.ntlx.board.User;
 import com.ntlx.boardtest.TestOwner;
+import com.ntlx.data.DatabaseBoardDAO;
 import com.ntlx.data.DatabaseCardDAO;
+import com.ntlx.exception.AuthorizationException;
 
 public class DatabaseCardDAOTest {
 	TestDatabaseDAOFactory factory = new TestDatabaseDAOFactory();
+	
 	@Test
 	public void test() throws ClassNotFoundException, NamingException, SQLException {
 		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
-		Card card = new Card(Card.NEW_CARD_ID, new TestOwner(), "TestContent", 0);
+		Card card = new Card(Card.NEW_CARD_ID, new TestOwner(), "TestContent", 0, 1);
 		dao.create(card);
 		Card cardRes = dao.loadCard(4);
 		Assert.assertEquals("TestContent", cardRes.getContent());
+	}
+
+	@Test
+	public void testDeleteCardUnauthorized() throws ClassNotFoundException, NamingException, SQLException {
+		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
+		DatabaseBoardDAO boardDao = factory.createDatabaseBoardDAO();
+		Card card = new Card(Card.NEW_CARD_ID, new TestOwner(), "TestContent", 0, 1);
+		dao.create(card);
+		User unauthorizedUser = new User(2, "Evil User");
+		Board board = boardDao.loadSingleDAO(card.getBoardId(), unauthorizedUser);
+		try {
+			dao.delete(board, card);
+			Assert.fail("User should not be authorized to delete this card");
+		} catch (AuthorizationException e) {
+			//ok
+		}
+	}
+	
+	@Test
+	public void testDeleteCard() throws ClassNotFoundException, NamingException, SQLException {
+		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
+		DatabaseBoardDAO boardDao = factory.createDatabaseBoardDAO();
+		User owner = new TestOwner();
+		Card card = new Card(Card.NEW_CARD_ID, owner, "TestContent", 0, 1);
+		dao.create(card);
+		Board board = boardDao.loadSingleDAO(card.getBoardId(), owner);
+		try {
+			dao.delete(board, card);
+		} catch (AuthorizationException e) {
+			Assert.fail("User should be authorized to delete this card");
+		}
 	}
 
 }

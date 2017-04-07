@@ -7,12 +7,14 @@ public class Card {
 	protected int laneId;
 	protected User owner;
 	protected String content;
+	protected int boardId;
 	
-	public Card(int id, User owner, String content, int laneId) {
+	public Card(int id, User owner, String content, int laneId, int boardId) {
 		this.id = id;
 		this.owner = owner;
 		this.content = content;
 		this.laneId = laneId;
+		this.boardId = boardId;
 	}
 	
 	public void setAfterCardId (int id) {
@@ -41,5 +43,9 @@ public class Card {
 
 	public int getId() {
 		return id;
+	}
+
+	public int getBoardId() {
+		return boardId;
 	}
 }
