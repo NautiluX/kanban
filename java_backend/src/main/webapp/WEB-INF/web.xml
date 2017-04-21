@@ -36,8 +36,8 @@
 			<web-resource-name>*</web-resource-name>
 			<url-pattern>/getBoard</url-pattern>
 			<url-pattern>/moveCard</url-pattern>
+			<!-- <url-pattern>/setup</url-pattern>-->
 			<url-pattern>/newCard</url-pattern>
-			<url-pattern>/setup</url-pattern>
 			<url-pattern>/deleteCard</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
@@ -52,6 +52,7 @@
 		</user-data-constraint>
 	</security-constraint>
 	
+			
 	<security-role>
 	    <role-name>kanban_user</role-name>
 	</security-role>

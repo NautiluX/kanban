@@ -1,0 +1,29 @@
+proxy_prod:
+    image: nginx
+    links:
+        - frontend_prod:frontend
+        - backend_prod:backend
+    volumes:
+        - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+        - "3334:80"
+frontend_prod:
+    image: nginx
+    volumes:
+        - ./frontend:/usr/share/nginx/html
+backend_prod:
+    image: tomcat
+    links: 
+        - database_prod:database
+    volumes:
+        - ./java_backend/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+        - ./java_backend/mysql-connector-java-5.1.40-bin.jar:/usr/local/tomcat/lib/mysql-connector-java-5.1.40-bin.jar
+        - ./java_backend/logs:/usr/local/tomcat/logs
+        - ./java_backend/target/kanban_prod.war:/usr/local/tomcat/webapps/backend.war
+database_prod:
+    image: mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=toor
+        - MYSQL_DATABASE=kanban
+        - MYSQL_USER=kanban
+        - MYSQL_PASSWORD=k4nb4n
