@@ -1,27 +1,29 @@
 var Model = function() {
     var selectedBoard;
+    var tag = null;
 };
+
 Model.prototype.updateModel = function() {
     this.loadBoard(selectedBoard.id);
 };
 
-Model.prototype.loadBoard = function(id, tag) {
-    $.get( model.generateBoardURL("/backend/getBoard", id, tag), function( board ) {
+Model.prototype.loadBoard = function(id) {
+    $.get( model.generateBoardURL("/backend/getBoard", id), function( board ) {
         model.updateSelectedBoard(board);
     });
 };
 
-Model.prototype.loadBoardWorldReadable = function(id, tag) {
-    $.get( model.generateBoardURL("/backend/getBoardWorldReadable", id, tag), function( board ) {
+Model.prototype.loadBoardWorldReadable = function(id) {
+    $.get( model.generateBoardURL("/backend/getBoardWorldReadable", id), function( board ) {
         model.updateSelectedBoard(board);
     });
 };
 
-Model.prototype.generateBoardURL = function (url, id, tag) {
+Model.prototype.generateBoardURL = function (url, id) {
     var fullUrl = url;
     fullUrl += "?id=" + id;
-    if (tag)
-        fullUrl += "&tag=" + tag;
+    if (this.tag)
+        fullUrl += "&tag=" + this.tag;
     return fullUrl;
 };
 
@@ -55,6 +57,10 @@ Model.prototype.deleteCard = function(card) {
         function (data) {
             model.updateModel();
         });
+}
+
+Model.prototype.setTag = function (tag) {
+    this.tag = tag;
 }
 
 var model = new Model();
