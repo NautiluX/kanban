@@ -54,9 +54,14 @@ var renderCardListItem = function (card) {
 };
 var renderCardContent = function (card) {
     cardHtml = '<div class="cardContent">';
-    cardHtml += card.content;
+    cardHtml += highlightTags(card.content);
     cardHtml += '</div>';
     return cardHtml;
+};
+var highlightTags = function (content) {
+    var highlightedContent = content;
+    highlightedContent = highlightedContent.replace(/(#(.+?))(\s|#|$)/g, '<a href="/?tag=$2">$1</a>$3');
+    return highlightedContent;
 };
 
 var renderCardDeleteButton = function (card) {

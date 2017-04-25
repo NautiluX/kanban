@@ -31,11 +31,12 @@ public class GetBoard extends KanbanServlet {
      	dbl = databaseDaoFactory.createDatabaseBoardDAO();
 
     	String boardId = request.getParameter("id");
+    	String tag = request.getParameter("tag");
 		if (boardId == null) {
 			response.getWriter().append("Board id missing");
 		} else {
 			int id = Integer.parseInt(boardId);
-			returnBoard(response, id, user);
+			returnBoard(response, id, user, tag);
 		}
 	}
 
@@ -45,8 +46,8 @@ public class GetBoard extends KanbanServlet {
 		response.getOutputStream().print(boards.toString());
 	}
 	
-	protected void returnBoard(HttpServletResponse response, int id, User user) throws SQLException, IOException, NamingException, AuthorizationException, BoardNotFoundException {
-		Board board = dbl.loadSingleDAO(id, user);
+	protected void returnBoard(HttpServletResponse response, int id, User user, String tag) throws SQLException, IOException, NamingException, AuthorizationException, BoardNotFoundException {
+		Board board = dbl.loadSingleDAO(id, user, tag);
 		if (board != null) {
 			printBoard(response, board);
 		} else {

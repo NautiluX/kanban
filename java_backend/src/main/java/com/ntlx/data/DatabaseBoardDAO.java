@@ -19,6 +19,7 @@ import com.ntlx.board.Permissions;
 public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	
 	private String baseSql = "SELECT BOARD_ID, BOARD_NAME, USER_NAME, USER_ID, WORLD_READABLE FROM BOARDS INNER JOIN USERS ON BOARDS.OWNER_ID = USERS.USER_ID";
+	private String tag = null;
 	
 	public DatabaseBoardDAO(Database db) throws NamingException, SQLException {
 		super(db);
@@ -28,7 +29,7 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 		ResultSet rs = database.executeQuery(baseSql);
 		createBoards(rs, user);
 	}
-
+	
 	public Board loadSingleDAO(int id, User user) throws SQLException, NamingException {
 		ResultSet rs = executeSingleBoardQuery(id);
 		createBoards(rs, user);
@@ -40,6 +41,13 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 		stmt.setInt(1, id);
 		ResultSet rs = stmt.executeQuery();
 		return rs;
+	}
+	
+	public Board loadSingleDAO(int id, User user, String tag) throws SQLException, NamingException {
+		ResultSet rs = executeSingleBoardQuery(id);
+		this.tag  = tag;
+		createBoards(rs, user);
+		return getDAO(id);
 	}
 	
 	public void createBoards(ResultSet rs, User user) throws SQLException, NamingException {
@@ -69,6 +77,7 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 
 	public void loadLanes(Board board) throws SQLException, NamingException {
 		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(database);
+		databaseLaneDao.setTag(tag);
 		databaseLaneDao.loadDAOs(board);
 	}
 

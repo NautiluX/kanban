@@ -5,16 +5,24 @@ Model.prototype.updateModel = function() {
     this.loadBoard(selectedBoard.id);
 };
 
-Model.prototype.loadBoard = function(id) {
-    $.get( "/backend/getBoard?id="+id, function( board ) {
+Model.prototype.loadBoard = function(id, tag) {
+    $.get( model.generateBoardURL("/backend/getBoard", id, tag), function( board ) {
         model.updateSelectedBoard(board);
     });
 };
 
-Model.prototype.loadBoardWorldReadable = function(id) {
-    $.get( "/backend/getBoardWorldReadable?id="+id, function( board ) {
+Model.prototype.loadBoardWorldReadable = function(id, tag) {
+    $.get( model.generateBoardURL("/backend/getBoardWorldReadable", id, tag), function( board ) {
         model.updateSelectedBoard(board);
     });
+};
+
+Model.prototype.generateBoardURL = function (url, id, tag) {
+    var fullUrl = url;
+    fullUrl += "?id=" + id;
+    if (tag)
+        fullUrl += "&tag=" + tag;
+    return fullUrl;
 };
 
 Model.prototype.updateSelectedBoard = function(board) {

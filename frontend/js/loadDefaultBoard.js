@@ -13,9 +13,10 @@ App.prototype.loadDefaultBoard = function () {
 
 App.prototype.loadBoard = function (boardId) {
     var readWrite = $.url('?rw');
+    var tag = $.url('?tag');
     if (readWrite !== 'true') {
-        model.loadBoardWorldReadable(boardId);
+        model.loadBoardWorldReadable(boardId, tag);
     } else {
-        model.loadBoard(boardId);
+        model.loadBoard(boardId, tag);
     }
 };

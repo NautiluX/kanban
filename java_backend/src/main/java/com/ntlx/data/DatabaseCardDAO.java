@@ -17,17 +17,27 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME FROM CARDS INNER JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID";
 	String laneCardsSql = baseSql + " WHERE LANE_ID = ?";
 	String singleCardSql = baseSql + " WHERE CARD_ID = ?";
+	String laneCardsSqlTag = laneCardsSql + " AND CONTENT LIKE ?";
 
 	String insertSql = "INSERT INTO CARDS (BOARD_ID, LANE_ID, OWNER_ID, CONTENT) VALUES (?, ?, ?, ?)";
 	String updateSql = "UPDATE CARDS SET LANE_ID = ? WHERE CARD_ID = ?";
 	String deleteSql = "DELETE FROM CARDS WHERE CARD_ID = ?";
+	private String tag = null;
+	
 	public DatabaseCardDAO(Database database) throws NamingException, SQLException {
 		super(database);
 	}
 
 	public void loadDAOs(Lane lane) throws SQLException {
-		PreparedStatement statement = database.prepareStatement(laneCardsSql);
-		statement.setInt(1, lane.getId());
+		PreparedStatement statement;
+		if (tag == null) {
+			statement = database.prepareStatement(laneCardsSql);
+			statement.setInt(1, lane.getId());
+		} else {
+			statement = database.prepareStatement(laneCardsSqlTag);
+			statement.setInt(1, lane.getId());
+			statement.setString(2, "%#"+tag+"%");
+		}
 		ResultSet rs = statement.executeQuery();
 		addCardsFromResultSet(rs, lane);
 	}
@@ -96,5 +106,9 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 		PreparedStatement statement = database.prepareStatement(deleteSql);
 		statement.setInt(1, card.getId());
 		statement.executeUpdate();
+	}
+
+	public void setTag(String tag) {
+		this.tag  = tag;
 	}
 }
