@@ -26,10 +26,10 @@ Password: secret
 - Delete cards
 - World-readable boards
 - Load board (share-by-link)
+- Label cards using #label in content
+- Filter by label
 - (planned) Setup for platforms that don't support docker
 - (planned) Separate URL for World-Readable
-- (planned) Label cards using #label in content
-- (planned) Filter by label
 - (planned) Comment cards
 - (planned) Create boards
 - (planned) Board overview, select board
@@ -38,6 +38,11 @@ Password: secret
 - (planned) Assign cards to different users
 - (planned) Smart boards for labels
 - (planned) Registration self service
+
+## Board Permissions Concept
+- READ - User is allowed to read a board
+- CONTRIBUTE - User can drag, create and delete cards
+- MANAGE - User can change board lanes, change board permissions
 
 ## Get Involved
 

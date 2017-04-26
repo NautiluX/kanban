@@ -1,5 +1,6 @@
+var app;
 $( document ).ready(function() {
-    var app = new App();
+    app = new App();
     app.loadDefaultBoard();
 });
 
@@ -34,17 +35,21 @@ var createLanes = function (lanes) {
         lane.cards.forEach(function (card) {
             renderCard(lane, card);
         });
-        $('#lane_'+lane.id+'_list').append(newCardListItem);
+        if (model.hasPermission("CONTRIBUTE")) {
+            $('#lane_'+lane.id+'_list').append(newCardListItem);
+        }
     });
 };
 
 var renderCard = function (lane, card) {
     var cardHtml = renderCardListItem(card);
     var cardContent = renderCardContent(card);
-    var deleteHtml = renderCardDeleteButton(card);
     $('#lane_'+lane.id+'_list').append(cardHtml);
     $('#card_' + card.id).append(cardContent);
-    $('#card_' + card.id).append(deleteHtml);
+    if (model.hasPermission("CONTRIBUTE")) {
+        var deleteHtml = renderCardDeleteButton(card);
+        $('#card_' + card.id).append(deleteHtml);
+    }
 };
 
 var renderCardListItem = function (card) {
@@ -60,7 +65,7 @@ var renderCardContent = function (card) {
 };
 var highlightTags = function (content) {
     var highlightedContent = content;
-    highlightedContent = highlightedContent.replace(/(#(.+?))(\s|#|$)/g, '<a href="/?tag=$2">$1</a>$3');
+    highlightedContent = highlightedContent.replace(/(#(.+?))(\s|#|$)/g, app.generateParamLink('', '$2', '$2', {tag: '$2'}) + '$3');
     return highlightedContent;
 };
 
@@ -69,6 +74,6 @@ var renderCardDeleteButton = function (card) {
     deleteHtml += '<i class="deleteCard material-icons" card_id="' + card.id + '" id="delete_card_' + card.id + '">delete</i>';
     deleteHtml += '</button>';
     var deleteButton = $(deleteHtml);
-    deleteButton.on("click", function (e) {model.deleteCard(card);});
+    deleteButton.on("click", function (e) {app.deleteCard(card);});
     return deleteButton;
 }

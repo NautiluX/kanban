@@ -1,10 +1,15 @@
 var adjustment;
 var SORTABLE_SELECTOR="ol.example";
 var initSortable = function () {
+    var dragAllowed = true;
+    if (!model.hasPermission("MANAGE")) {
+        dragAllowed = false;
+    }
     $(SORTABLE_SELECTOR).sortable({
         group: 'example',
         pullPlaceholder: false,
         exclude: '.newCard',
+        drag: dragAllowed,
         // animation on drop
         onDrop: function  ($item, container, _super) {
             var $clonedItem = $('<li/>').css({height: 0});
@@ -53,12 +58,12 @@ var registerNewCardEvent = function() {
 
 var moveCard = function(card) {
     var lane = getLane(card);
-    model.moveCard($(card).attr("card_id"), $(lane).attr("lane_id"));
+    app.moveCard($(card).attr("card_id"), $(lane).attr("lane_id"));
 }
 
 var createCard = function(lane, content) {
     var laneId = $(lane).attr("lane_id");
-    model.createCard(laneId, content);
+    app.createCard(laneId, content);
 };
 
 var getLane = function(card) {

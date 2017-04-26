@@ -1,21 +1,27 @@
 var Model = function() {
     var selectedBoard;
     var tag = null;
+    var readWrite = false;
 };
 
-Model.prototype.updateModel = function() {
-    this.loadBoard(selectedBoard.id);
+Model.prototype.updateModel = function(callback) {
+    this.loadBoard(this.selectedBoard.id, callback);
 };
 
-Model.prototype.loadBoard = function(id) {
+Model.prototype.loadBoard = function(id, callback) {
+    this.readWrite = true;
     $.get( model.generateBoardURL("/backend/getBoard", id), function( board ) {
-        model.updateSelectedBoard(board);
+        model.updateSelectedBoard(board, callback);
     });
 };
 
-Model.prototype.loadBoardWorldReadable = function(id) {
+Model.prototype.isReadWrite = function () {
+    return this.readWrite;
+};
+
+Model.prototype.loadBoardWorldReadable = function(id, callback) {
     $.get( model.generateBoardURL("/backend/getBoardWorldReadable", id), function( board ) {
-        model.updateSelectedBoard(board);
+        model.updateSelectedBoard(board, callback);
     });
 };
 
@@ -27,40 +33,48 @@ Model.prototype.generateBoardURL = function (url, id) {
     return fullUrl;
 };
 
-Model.prototype.updateSelectedBoard = function(board) {
-    selectedBoard = board;
-    renderBoard(board);
+Model.prototype.updateSelectedBoard = function(board, callback) {
+    this.selectedBoard = board;
+    callback();
 };
 
-Model.prototype.createCard = function(laneId, content) {
+Model.prototype.createCard = function(laneId, content, callback) {
     $.post("/backend/newCard", 
-        {"boardId": selectedBoard.id, 
+        {"boardId": this.selectedBoard.id, 
          "laneId": laneId,
          "content": content},
         function (data) {
-            model.updateModel();
+            model.updateModel(callback);
         });
 };
 
-Model.prototype.moveCard = function(cardId, newLaneId) {
+Model.prototype.getSelectedBoard = function () {
+    return this.selectedBoard;
+};
+
+Model.prototype.hasPermission = function (permission) {
+    return this.selectedBoard.permissions.indexOf(permission) >= 0;
+};
+
+Model.prototype.moveCard = function(cardId, newLaneId, callback) {
     $.post("/backend/moveCard", 
         { "cardId": cardId,
          "newLaneId": newLaneId},
         function (data) {
-            model.updateModel();
+            model.updateModel(callback);
         });
 };
 
-Model.prototype.deleteCard = function(card) {
+Model.prototype.deleteCard = function(card, callback) {
     $.post("/backend/deleteCard", 
         { "cardId": card.id },
         function (data) {
-            model.updateModel();
+            model.updateModel(callback);
         });
 }
 
 Model.prototype.getTag = function () {
-    return this.tag;
+    return this.tag?this.tag:'';
 }
 
 Model.prototype.setTag = function (tag) {

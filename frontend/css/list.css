@@ -117,13 +117,14 @@ div.menuitem {
     height: 10px;
     display:inline-block;
     border-radius:3px;
+    margin-left:7px;
 }
 
 div.menuitem:hover {
     background-color:#024E78;
 }
 
-div.menu {
+div.menubar {
     background-color:#000;
     width: 100%;
     color: #bbbbbb;
