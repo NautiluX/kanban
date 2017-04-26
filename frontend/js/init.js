@@ -65,7 +65,7 @@ var renderCardContent = function (card) {
 };
 var highlightTags = function (content) {
     var highlightedContent = content;
-    highlightedContent = highlightedContent.replace(/(#(.+?))(\s|#|$)/g, app.generateParamLink('', '$2', '$2', {tag: '$2'}) + '$3');
+    highlightedContent = highlightedContent.replace(/(#(.+?))(\s|#|$)/g, app.generateParamLink('', 'Filter by Label #$2', '#$2', {tag: '$2'}) + '$3');
     return highlightedContent;
 };
 
