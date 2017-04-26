@@ -12,6 +12,15 @@ body {
     width:100%;
 }
 
+a {
+    text-decoration: none;
+    color: #0090d2;
+}
+a:hover {
+    text-decoration: none;
+    color: #ffffff;
+}
+
 .dragged {
     position: absolute;
     opacity: 0.8;
@@ -101,11 +110,25 @@ div.lanes {
     width:100%;
 }
 
+div.menuitem {
+    background-color:#000;
+    color: #bbbbbb;
+    padding: 10px;
+    height: 10px;
+    display:inline-block;
+    border-radius:3px;
+}
+
+div.menuitem:hover {
+    background-color:#024E78;
+}
+
 div.menu {
     background-color:#000;
     width: 100%;
     color: #bbbbbb;
     padding: 10px;
+    height: 15px;
 }
 
 span.lane {

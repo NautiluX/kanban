@@ -59,6 +59,10 @@ Model.prototype.deleteCard = function(card) {
         });
 }
 
+Model.prototype.getTag = function () {
+    return this.tag;
+}
+
 Model.prototype.setTag = function (tag) {
     this.tag = tag;
 }
