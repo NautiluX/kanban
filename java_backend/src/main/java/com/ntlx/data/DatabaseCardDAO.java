@@ -14,7 +14,7 @@ import com.ntlx.exception.AuthorizationException;
 import com.ntlx.exception.DeleteNotAllowedException;
 
 public class DatabaseCardDAO extends DatabaseDAO<Card> {
-	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME FROM CARDS INNER JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID";
+	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME FROM CARDS LEFT JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID";
 	String laneCardsSql = baseSql + " WHERE LANE_ID = ?";
 	String singleCardSql = baseSql + " WHERE CARD_ID = ?";
 	String laneCardsSqlTag = laneCardsSql + " AND CONTENT LIKE ?";

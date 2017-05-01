@@ -18,7 +18,7 @@ import com.ntlx.board.Permissions;
 
 public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	
-	private String baseSql = "SELECT BOARD_ID, BOARD_NAME, USER_NAME, USER_ID, WORLD_READABLE FROM BOARDS INNER JOIN USERS ON BOARDS.OWNER_ID = USERS.USER_ID";
+	private String baseSql = "SELECT BOARD_ID, BOARD_NAME, USER_NAME, USER_ID, WORLD_READABLE FROM BOARDS LEFT JOIN USERS ON BOARDS.OWNER_ID = USERS.USER_ID";
 	private String tag = null;
 	
 	public DatabaseBoardDAO(Database db) throws NamingException, SQLException {

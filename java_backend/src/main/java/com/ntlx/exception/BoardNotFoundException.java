@@ -8,6 +8,6 @@ public class BoardNotFoundException extends Exception {
 	}
 
 	public String getMessage() {
-		return "Board not found." + boardId;
+		return "Board not found. (ID: " + boardId + ")";
 	}
 }

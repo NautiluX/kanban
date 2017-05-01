@@ -61,24 +61,7 @@ cd sbin
 ```
 
 ## Features
-
-- Create new cards
-- Drag cards from one lane to another
-- Delete cards
-- World-readable boards
-- Load board (share-by-link)
-- Label cards using #label in content
-- Filter by label
-- (planned) Setup for platforms that don't support docker
-- (planned) Separate URL for World-Readable
-- (planned) Comment cards
-- (planned) Create boards
-- (planned) Board overview, select board
-- (planned) Connect to boards from different backends (private, cloud, corporate)
-- (planned) Share boards
-- (planned) Assign cards to different users
-- (planned) Smart boards for labels
-- (planned) Registration self service
+Backlog managed [here](http://yukan.instantbooth.de)
 
 ## Board Permissions Concept
 - READ - User is allowed to read a board
