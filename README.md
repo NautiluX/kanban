@@ -33,30 +33,31 @@ The system shall be accessible for mobile devices as well as any web browser.
 ```
 - Restart apache
 - run the following SQL in MySQL as MySQL root user (change the password of course):
-```
-CREATE DATABASE "kanban";
-CREATE USER "kanban" IDENTIFIED BY "k4nb4n";
-GRANT ALL PRIVILEGES ON "kanban".* TO "kanban";
-```
 - Adjust *java_backend/src/main/webapp/META-INF/context.xml* to fit your database location and user credentials (primary the following lines)
 ```
 line *url="jdbc:mysql://database:3306/kanban"
 username="kanban" password="k4nb4n"
 ```
-- In *java_backend* directory: run mvn clean install
+- Adjust *sbin/config.sh* to fit your needs
+- In *java_backend* directory: run *mvn clean install*
 - Copy *java_backend/target/kanban.war* to /var/lib/tomcat8/webapps/backend.war
 - Restart tomcat
+- in *sbin* run *setup.sh*
 - In a browser, go to your.server.org/backend/Setup
 
 ## Create Users
-Run SQL like the following
+Make sure config.sh is configured correctly
+
+### Create Admin user
 ```
-INSERT INTO USERS (USER_NAME, PASSWORD) VALUES ('example_user', 'secret');
-INSERT INTO USER_ROLES (USER_NAME, ROLE_NAME) VALUES ('example_user', 'kanban_user')
+cd sbin
+./create_user.sh -a -u kanban_admin -p secret
 ```
-To create an admin user in addition add the kanban_admin role
+
+### Create Admin user
 ```
-INSERT INTO USER_ROLES (USER_NAME, ROLE_NAME) VALUES ('example_user', 'kanban_admin')
+cd sbin
+./create_user.sh -u kanban_admin -p secret
 ```
 
 ## Features

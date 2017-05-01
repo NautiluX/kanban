@@ -43,8 +43,12 @@ public class DatabaseSetup {
     }
     
     public void createTables() throws NamingException, SQLException{
-		db.executeUpdate("CREATE TABLE USERS (USER_ID INTEGER NOT NULL " + autoIncrement + ", USER_NAME NVARCHAR(200), PASSWORD NVARCHAR(200),  " + primaryKey  + " (USER_ID))");
-    	db.executeUpdate("CREATE TABLE USER_ROLES (USER_NAME NVARCHAR(200), ROLE_NAME NVARCHAR(200), PRIMARY KEY (USER_NAME, ROLE_NAME))");
+    	try {
+			db.executeUpdate("CREATE TABLE USERS (USER_ID INTEGER NOT NULL " + autoIncrement + ", USER_NAME NVARCHAR(200), PASSWORD NVARCHAR(200),  " + primaryKey  + " (USER_ID))");
+	    	db.executeUpdate("CREATE TABLE USER_ROLES (USER_NAME NVARCHAR(200), ROLE_NAME NVARCHAR(200), PRIMARY KEY (USER_NAME, ROLE_NAME))");
+    	}  catch (SQLException e) {
+    		//Ignore, they may already exist
+    	}
     	db.executeUpdate("CREATE TABLE BOARDS (BOARD_ID INTEGER NOT NULL " + autoIncrement + ", BOARD_NAME NVARCHAR(200), OWNER_ID INTEGER NOT NULL, WORLD_READABLE INTEGER, " + primaryKey  + " (BOARD_ID))");
     	db.executeUpdate("CREATE TABLE LANES (LANE_ID INTEGER NOT NULL " + autoIncrement + ", BOARD_ID INTEGER NOT NULL, TITLE NVARCHAR(5000), AFTER_LANE_ID INTEGER, " + primaryKey  + " (LANE_ID))");
     	db.executeUpdate("CREATE TABLE CARDS (CARD_ID INTEGER NOT NULL " + autoIncrement + ", LANE_ID INTEGER NOT NULL, BOARD_ID INTEGER NOT NULL, OWNER_ID INTEGER NOT NULL, AFTER_CARD_ID INTEGER, CONTENT NVARCHAR(5000), " + primaryKey  + " (CARD_ID))");
