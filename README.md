@@ -8,6 +8,7 @@ The system shall be accessible for mobile devices as well as any web browser.
 
 ## Setup
 ### Option 1: Using docker-compose
+**Recommended for development**
 
 - In root directory: docker-compose up -d
 - In *java_backend* directory: mvn tomcat7:deploy
@@ -15,6 +16,7 @@ The system shall be accessible for mobile devices as well as any web browser.
 - go to *localhost:3333*
 
 ### Option 2: Without docker
+**Recommended for production**
 - Install MySql
 - Install Tomcat
 - Install apache httpd
@@ -43,7 +45,7 @@ username="kanban" password="k4nb4n"
 - Copy *java_backend/target/kanban.war* to /var/lib/tomcat8/webapps/backend.war
 - Restart tomcat
 - in *sbin* run *setup.sh*
-- In a browser, go to your.server.org/backend/Setup
+- In a browser, go to your.server.org/backend/setup
 
 ## Create Users
 Make sure config.sh is configured correctly
