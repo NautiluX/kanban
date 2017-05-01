@@ -7,11 +7,46 @@ The goal of this project is to provide a kanban board that can be used for both 
 The system shall be accessible for mobile devices as well as any web browser.
 
 ## Setup
+### Option 1: Using docker-compose
 
 - In root directory: docker-compose up -d
 - In *java_backend* directory: mvn tomcat7:deploy
 - go to *localhost:3333/backend/setup*
 - go to *localhost:3333*
+
+### Option 2: Without docker
+- Install MySql
+- Install Tomcat
+- Install apache httpd
+- In apache, configure virtual host like the following
+```
+<VirtualHost *:80>
+    ServerAdmin webmaster@your.server.org
+
+    DocumentRoot /var/www/html/yukan
+
+    ProxyPass /backend/ http://localhost:8080/backend/
+    ProxyPassReverse /backend/ http://localhost:8080/backend/
+
+    ServerName your.server.org
+</VirtualHost>
+```
+- Restart apache
+- run the following SQL in MySQL as MySQL root user (change the password of course):
+```
+CREATE DATABASE "kanban";
+CREATE USER "kanban" IDENTIFIED BY "k4nb4n";
+GRANT ALL PRIVILEGES ON "kanban".* TO "kanban";
+```
+- Adjust *java_backend/src/main/webapp/META-INF/context.xml* to fit your database location and user credentials (primary the following lines)
+```
+line *url="jdbc:mysql://database:3306/kanban"
+username="kanban" password="k4nb4n"
+```
+- In *java_backend* directory: run mvn clean install
+- Copy *java_backend/target/kanban.war* to /var/lib/tomcat8/webapps/backend.war
+- Restart tomcat
+- In a browser, go to your.server.org/backend/Setup
 
 ## Test User Credentials
 
