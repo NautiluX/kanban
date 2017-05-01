@@ -6,7 +6,7 @@ import javax.naming.NamingException;
 
 public class DatabaseSetup {
 
-	Database db;
+	protected Database db;
 	protected String autoIncrement = "AUTO_INCREMENT";
 	String primaryKey = "PRIMARY KEY";
 
@@ -16,7 +16,6 @@ public class DatabaseSetup {
 	}
 	
 	public void executeSetup() throws SQLException, NamingException{
-		deleteTablesIfExisting();
     	createTables();
     	createInitialData();
     }
@@ -54,12 +53,6 @@ public class DatabaseSetup {
     }
     
     public void createInitialData() throws SQLException {
-    	db.executeUpdate("INSERT INTO USERS (USER_NAME, PASSWORD) VALUES ('example_user', 'secret')");
-    	db.executeUpdate("INSERT INTO USERS (USER_NAME, PASSWORD) VALUES ('unauthorized_user', 'evil')");
-
-    	db.executeUpdate("INSERT INTO USER_ROLES (USER_NAME, ROLE_NAME) VALUES ('example_user', 'kanban_user')");
-    	db.executeUpdate("INSERT INTO USER_ROLES (USER_NAME, ROLE_NAME) VALUES ('unauthorized_user', 'kanban_user')");
-    	
     	db.executeUpdate("INSERT INTO BOARDS (BOARD_NAME, OWNER_ID, WORLD_READABLE) VALUES ('Default Board', 1, 1)");
     	
     	db.executeUpdate("INSERT INTO LANES (BOARD_ID, AFTER_LANE_ID, TITLE) VALUES (1, NULL, 'Backlog')");

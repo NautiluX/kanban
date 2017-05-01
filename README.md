@@ -48,11 +48,16 @@ username="kanban" password="k4nb4n"
 - Restart tomcat
 - In a browser, go to your.server.org/backend/Setup
 
-## Test User Credentials
-
-Username: example_user
-
-Password: secret
+## Create Users
+Run SQL like the following
+```
+INSERT INTO USERS (USER_NAME, PASSWORD) VALUES ('example_user', 'secret');
+INSERT INTO USER_ROLES (USER_NAME, ROLE_NAME) VALUES ('example_user', 'kanban_user')
+```
+To create an admin user in addition add the kanban_admin role
+```
+INSERT INTO USER_ROLES (USER_NAME, ROLE_NAME) VALUES ('example_user', 'kanban_admin')
+```
 
 ## Features
 
