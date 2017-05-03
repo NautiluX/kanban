@@ -147,7 +147,7 @@ span.lane {
     vertical-align:top;
     display: inline-block;
     white-space: normal;
-    height: 100%;
+    height: calc(100% - 39px);
     overflow: scroll;
 }
 
