@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source config.sh
+source ~/.yukan_config.sh
 
 mysql -u ${YUKAN_DB_ROOT} --password=${YUKAN_DB_ROOT_PASSWORD} << EOF
 CREATE DATABASE kanban;

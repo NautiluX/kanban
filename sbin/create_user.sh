@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source config.sh
+source ~/.yukan_config.sh
 
 NEW_USERNAME=false
 NEW_PASSWORD=false

@@ -22,6 +22,9 @@ backend:
         - /usr/local/tomcat/webapps
 database:
     image: mysql
+    volumes:
+        - ./sbin:/kanbanscripts
+        - ./sbin/config.sh:/root/.yukan_config.sh
     environment:
         - MYSQL_ROOT_PASSWORD=toor
         - MYSQL_DATABASE=kanban

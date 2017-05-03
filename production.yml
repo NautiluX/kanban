@@ -22,6 +22,9 @@ backend_prod:
         - ./java_backend/target/kanban_prod.war:/usr/local/tomcat/webapps/backend.war
 database_prod:
     image: mysql
+    volumes:
+        - ./sbin:/kanbanscripts
+        - ./sbin/config.sh:/root/.yukan_config.sh
     environment:
         - MYSQL_ROOT_PASSWORD=toor
         - MYSQL_DATABASE=kanban

@@ -14,6 +14,7 @@ The system shall be accessible for mobile devices as well as any web browser.
 - In *java_backend* directory: mvn tomcat7:deploy
 - go to *localhost:3333/backend/setup*
 - go to *localhost:3333*
+- create a user by executing *docker exec kanban_database_1 /kanbanscripts/create_user.sh -a -u admin -p admin* (see [Create Users](#Create%20Users) for more usage information) containername may need to be adjusted to your setup.
 
 ### Option 2: Without docker
 **Recommended for production**
@@ -48,7 +49,7 @@ username="kanban" password="k4nb4n"
 - In a browser, go to your.server.org/backend/setup
 
 ## Create Users
-Make sure config.sh is configured correctly
+Copy example *sbin/config.sh* to ~/.yukan_config.sh and adjust your configuration inside
 
 ### Create Admin user
 ```
