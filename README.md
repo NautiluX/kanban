@@ -41,7 +41,7 @@ The system shall be accessible for mobile devices as well as any web browser.
 line *url="jdbc:mysql://database:3306/kanban"
 username="kanban" password="k4nb4n"
 ```
-- Copy *sbin/config.sh* to ~/.yukan_config.sh and make it fit your needs
+- Copy *sbin/config.sh* to *~/.yukan_config.sh* and make it fit your needs
 - In *java_backend* directory: run *mvn clean install*
 - Copy *java_backend/target/kanban.war* to */var/lib/tomcat8/webapps/backend.war*
 - Restart tomcat
@@ -49,7 +49,7 @@ username="kanban" password="k4nb4n"
 - In a browser, go to your.server.org/backend/setup
 
 ## Create Users
-Copy example *sbin/config.sh* to ~/.yukan_config.sh and adjust your configuration inside
+Copy example *sbin/config.sh* to *~/.yukan_config.sh* and adjust your configuration inside (if not done already).
 
 ### Create User
 ```
