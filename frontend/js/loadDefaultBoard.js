@@ -22,6 +22,7 @@ App.prototype.onLoaded = function() {
     this.initializeMenubar();
     renderBoard(model.getSelectedBoard());
     this.updateTagFilter();
+    this.updateTitle();
 }
 
 App.prototype.loadBoardReadmode = function (boardId, readWrite) {
@@ -37,6 +38,10 @@ App.prototype.loadBoardReadmode = function (boardId, readWrite) {
 App.prototype.updateTagFilter = function() {
     if (model.getTag())
         $("#currentTag").html('Current Tag filter: ' + this.generateParamLink('remove_tag', 'Remove Tag filter', '#'+model.getTag(), {tag: ''}));
+};
+
+App.prototype.updateTitle = function() {
+    document.title = model.getSelectedBoard().name + ' - YuKan';
 };
 
 App.prototype.clearMenubar = function() {
