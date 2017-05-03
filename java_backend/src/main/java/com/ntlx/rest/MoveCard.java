@@ -28,7 +28,7 @@ public class MoveCard extends KanbanServlet {
 		String cardIdString = request.getParameter("cardId");
 		String newLaneIdString = request.getParameter("newLaneId");
 		moveCard(cardIdString, newLaneIdString);
-		response.getWriter().append("{\"status\":\"success\"}");
+		writeResponse(response, "{\"status\":\"success\"}");
 	}
 
 	private void moveCard(String cardIdString, String newLaneIdString) throws NamingException, SQLException {

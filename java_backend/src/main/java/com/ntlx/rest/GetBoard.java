@@ -33,7 +33,7 @@ public class GetBoard extends KanbanServlet {
     	String boardId = request.getParameter("id");
     	String tag = request.getParameter("tag");
 		if (boardId == null) {
-			response.getWriter().append("Board id missing");
+			writeResponse(response, "Board id missing");
 		} else {
 			int id = Integer.parseInt(boardId);
 			returnBoard(response, id, user, tag);
@@ -56,6 +56,6 @@ public class GetBoard extends KanbanServlet {
 	}
 	
 	protected void printBoard(HttpServletResponse response, Board board) throws IOException, BoardNotReadableException {
-		response.getOutputStream().print(board.toString());
+		writeResponse(response, board.toString());
 	}
 }

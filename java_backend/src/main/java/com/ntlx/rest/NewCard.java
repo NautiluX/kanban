@@ -30,7 +30,7 @@ public class NewCard extends KanbanServlet {
 		String laneIdString = request.getParameter("laneId");
 		String content = request.getParameter("content");
 		createCard(boardIdString, laneIdString, userName, content);
-		response.getWriter().append("{\"status\":\"success\"}");
+		writeResponse(response, "{\"status\":\"success\"}");
 	}
 
 	private void createCard(String boardIdString, String laneIdString, String userName, String content) throws NamingException, SQLException {

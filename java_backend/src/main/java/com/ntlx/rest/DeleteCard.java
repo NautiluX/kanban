@@ -28,7 +28,7 @@ public class DeleteCard extends KanbanServlet {
     protected void doKanbanPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, NamingException, SQLException, AuthorizationException {
 		String cardIdString = request.getParameter("cardId");
 		deleteCard(cardIdString, user);
-		response.getWriter().append("{\"status\":\"success\"}");
+		writeResponse(response, "{\"status\":\"success\"}");
 	}
 
 	private void deleteCard(String cardIdString, User user) throws NamingException, SQLException, AuthorizationException {

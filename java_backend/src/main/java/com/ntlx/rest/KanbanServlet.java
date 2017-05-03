@@ -1,6 +1,7 @@
 package com.ntlx.rest;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -38,46 +39,51 @@ public abstract class KanbanServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 		try {
 			User user = getUser(request);
 			doKanbanPost(request, response, user);
 		} catch (SQLException e) {
  			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			response.getWriter().append("SQL Error: " + e.getMessage());
+			writeResponse(response, "SQL Error: " + e.getMessage());
 			e.printStackTrace(response.getWriter());
 		} catch (NamingException e) {
-			response.getWriter().append("Naming Error: " + e.getMessage());
+			writeResponse(response, "Naming Error: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (BoardNotFoundException e) {
- 			response.getWriter().append("Error loading Board: " + e.getMessage());
+			writeResponse(response, "Error loading Board: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		} catch (AuthorizationException e) {
- 			response.getWriter().append("Authorization Error: " + e.getMessage());
+			writeResponse(response, "Authorization Error: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
  		}
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 		try {
 			User user = getUser(request);
 			doKanbanGet(request, response, user);
 		} catch (SQLException e) {
  			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			response.getWriter().append("SQL Error: " + e.getMessage());
+ 			writeResponse(response, "SQL Error: " + e.getMessage());
 			e.printStackTrace(response.getWriter());
 		} catch (NamingException e) {
-			response.getWriter().append("Naming Error: " + e.getMessage());
+			writeResponse(response, "Naming Error: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (BoardNotFoundException e) {
- 			response.getWriter().append("Error loading Board: " + e.getMessage());
+			writeResponse(response, "Error loading Board: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		} catch (AuthorizationException e) {
- 			response.getWriter().append("Authorization Error: " + e.getMessage());
+			writeResponse(response, "Authorization Error: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
  		}
+	}
+	
+	protected void writeResponse(HttpServletResponse response, String responseText) throws UnsupportedEncodingException, IOException {
+        response.setContentType("application/json");
+        response.getOutputStream().write(responseText.getBytes("UTF-8"));
 	}
 	
 	protected void doKanbanPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, NamingException, SQLException, AuthorizationException, BoardNotFoundException{};

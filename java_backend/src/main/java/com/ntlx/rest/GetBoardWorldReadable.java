@@ -22,7 +22,7 @@ public class GetBoardWorldReadable extends GetBoard {
 	@Override
 	protected void printBoard(HttpServletResponse response, Board board) throws IOException, BoardNotReadableException {
 		if (board.isReadable()) {
-			response.getOutputStream().print(board.toString());
+			writeResponse(response, board.toString());
 		} else {
 			throw new BoardNotReadableException();
 		}
