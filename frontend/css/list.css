@@ -10,6 +10,7 @@ body {
     margin:0px;
     overflow:hidden;
     width:100%;
+    height:100%;
 }
 
 a {
@@ -103,11 +104,16 @@ div.page {
     margin: 10px;
     text-overflow: scroll;
     overflow-x:scroll;
-    height:100%;
+    height: calc(100% - 220px);
 }
 
 div.lanes {
     width:100%;
+}
+
+div.footer {
+    height: 10px;
+    padding-left:30px;
 }
 
 div.menuitem {
@@ -141,7 +147,7 @@ span.lane {
     vertical-align:top;
     display: inline-block;
     white-space: normal;
-    height: calc(100% - 200px);
+    height: 100%;
     overflow: scroll;
 }
 
