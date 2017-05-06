@@ -1,13 +1,18 @@
 package com.ntlx.data;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.ntlx.data.migration.DatabaseSchemaVersion;
+
 public abstract class Database {
 	protected Connection conn;
+	public static final String VERSION_TABLE_NAME = "SCHEMA_VERSION";
+	public static final String VERSION_COLUMN = "VERSION";
 	
     public ResultSet executeQuery(String sql) throws SQLException{
     	Statement statement = conn.createStatement();
@@ -26,5 +31,13 @@ public abstract class Database {
 
 	protected boolean isClosed() throws SQLException {
 		return conn.isClosed();
+	}
+
+	public abstract DatabaseSchemaVersion getCurrentSchemaVersion() throws SQLException;
+
+	protected long getCurrentVersionFromVersionTable() throws SQLException {
+		ResultSet rs = executeQuery("SELECT " + VERSION_COLUMN + " FROM " + VERSION_TABLE_NAME + " ORDER BY " + VERSION_COLUMN + " DESC LIMIT 1");
+		rs.next();
+		return rs.getLong(VERSION_COLUMN);
 	}
 }
