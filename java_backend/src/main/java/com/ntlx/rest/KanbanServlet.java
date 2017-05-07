@@ -12,10 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ntlx.board.GlobalUser;
 import com.ntlx.board.User;
+import com.ntlx.data.Database;
 import com.ntlx.data.DatabaseUserDAO;
+import com.ntlx.data.ProductiveDatabase;
 import com.ntlx.data.ProductiveDatabaseDAOFactory;
+import com.ntlx.data.migration.SchemaMigrator;
 import com.ntlx.exception.AuthorizationException;
 import com.ntlx.exception.BoardNotFoundException;
+import com.ntlx.exception.DatabaseSchemaOutdatedException;
 
 public abstract class KanbanServlet extends HttpServlet {
 
@@ -41,6 +45,7 @@ public abstract class KanbanServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
 		try {
+			checkVersion();
 			User user = getUser(request);
 			doKanbanPost(request, response, user);
 		} catch (SQLException e) {
@@ -56,13 +61,25 @@ public abstract class KanbanServlet extends HttpServlet {
 		} catch (AuthorizationException e) {
 			writeResponse(response, "Authorization Error: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
- 		}
+ 		} catch (DatabaseSchemaOutdatedException e) {
+			writeResponse(response, "Database Error: " + e.getMessage());
+ 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
 	}
 	
+	private void checkVersion() throws NamingException, SQLException, DatabaseSchemaOutdatedException {
+		Database db = ProductiveDatabase.getInstance();
+		SchemaMigrator migrator = new SchemaMigrator(db);
+		if (!migrator.isCurrentVersion()) {
+			throw new DatabaseSchemaOutdatedException();
+		}
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
 		try {
+			checkVersion();
 			User user = getUser(request);
 			doKanbanGet(request, response, user);
 		} catch (SQLException e) {
@@ -78,7 +95,10 @@ public abstract class KanbanServlet extends HttpServlet {
 		} catch (AuthorizationException e) {
 			writeResponse(response, "Authorization Error: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
- 		}
+ 		} catch (DatabaseSchemaOutdatedException e) {
+			writeResponse(response, "Database Error: " + e.getMessage());
+ 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	protected void writeResponse(HttpServletResponse response, String responseText) throws UnsupportedEncodingException, IOException {

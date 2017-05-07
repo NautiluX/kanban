@@ -71,6 +71,10 @@ Backlog managed [here](http://yukan.instantbooth.de)
 - CONTRIBUTE - User can drag, create and delete cards
 - MANAGE - User can change board lanes, change board permissions
 
+## Admin URLs
+- /backend/setup -- initial setup
+- /backend/migrate -- upgrade database schema
+
 ## Get Involved
 
 You want to stay up to date with this project? Sign up to our mailing list to stay up to date with what's going on. Every change in this project is communicated to this mailing list.

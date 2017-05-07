@@ -39,6 +39,7 @@
 			<!-- <url-pattern>/setup</url-pattern>-->
 			<url-pattern>/newCard</url-pattern>
 			<url-pattern>/deleteCard</url-pattern>
+			<url-pattern>/migrate</url-pattern>
 			<http-method>GET</http-method>
 			<http-method>POST</http-method>
 		</web-resource-collection>
