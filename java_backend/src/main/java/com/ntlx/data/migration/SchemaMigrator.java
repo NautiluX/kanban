@@ -10,7 +10,6 @@ public class SchemaMigrator {
 	private Database database;
 	private DatabaseSchemaVersion installedDatabaseSchemaVersion;
 	private Vector<DatabaseSchemaMigration> schemaMigrations;
-	public static final DatabaseSchemaVersion latestDatabaseSchemaVersion = DatabaseSchemaVersion.VERSION_1;
 	
 	public SchemaMigrator(Database database) throws SQLException {
 		this.database = database;
@@ -21,10 +20,11 @@ public class SchemaMigrator {
 	private void initializeSchemaMigrations() {
 		schemaMigrations = new Vector<DatabaseSchemaMigration>();
 		schemaMigrations.add(new DatabaseSchemaMigrationVersion1(database));
+		schemaMigrations.add(new DatabaseSchemaMigrationVersion2(database));
 	}
 
 	public boolean isCurrentVersion() {
-		return installedDatabaseSchemaVersion == latestDatabaseSchemaVersion;
+		return installedDatabaseSchemaVersion == DatabaseSchemaVersion.latestDatabaseSchemaVersion;
 	}
 	
 	public void migrate() throws SQLException, MigrationFailedException {

@@ -2,7 +2,8 @@ package com.ntlx.data.migration;
 
 public enum DatabaseSchemaVersion {
 	VERSION_UNKNOWN(-1),
-	VERSION_1(1),
+	VERSION_2(2),
+	VERSION_1(1, VERSION_2),
 	VERSION_0(0, VERSION_1);
 	
 	private long versionNumber;
@@ -25,6 +26,8 @@ public enum DatabaseSchemaVersion {
 			return VERSION_0;
 		} else if (versionNumber == VERSION_1.getNumber()) {
 			return VERSION_1;
+		} else if (versionNumber == VERSION_2.getNumber()) {
+			return VERSION_2;
 		}
 		return VERSION_UNKNOWN;
 	}
@@ -34,4 +37,6 @@ public enum DatabaseSchemaVersion {
 	private void setNextVersion(DatabaseSchemaVersion nextVersion) {
 		this.nextVersion = nextVersion;
 	}
+
+	public static final DatabaseSchemaVersion latestDatabaseSchemaVersion = DatabaseSchemaVersion.VERSION_2;
 }

@@ -25,7 +25,7 @@ public class SchemaMigratorTest {
 	
 	@Test
 	public void testInstalledVersionIsCurrentVersion() throws ClassNotFoundException, NamingException, SQLException{
-		Database db = new TestDatabaseConstantVersion(DatabaseSchemaVersion.VERSION_1);
+		Database db = new TestDatabaseConstantVersion(DatabaseSchemaVersion.VERSION_2);
 		SchemaMigrator m = new SchemaMigrator(db);
 		Assert.assertTrue(m.isCurrentVersion());
 	}
@@ -51,15 +51,15 @@ public class SchemaMigratorTest {
 
 	@Test
 	public void testCreateVersionTable() throws SQLException, ClassNotFoundException, NamingException {
-		Database db = new TestDatabase();
+		Database db = TestDatabase.getInstance();
 		DatabaseSchemaMigrationVersion1 v1 = new DatabaseSchemaMigrationVersion1(db);
 		v1.migrate();
 		Assert.assertTrue(db.hasVersionTable());
 	}
 	
 	@Test
-	public void testUpgradeToVersion1() throws SQLException, ClassNotFoundException, NamingException, MigrationFailedException {
-		Database db = new TestDatabase();
+	public void testUpgradeToLatestVersion() throws SQLException, ClassNotFoundException, NamingException, MigrationFailedException {
+		Database db = TestDatabase.getInstance();
 		SchemaMigrator m = new SchemaMigrator(db);
 		m.migrate();
 		Assert.assertTrue(m.isCurrentVersion());

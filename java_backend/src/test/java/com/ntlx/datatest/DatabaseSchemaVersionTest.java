@@ -26,6 +26,13 @@ public class DatabaseSchemaVersionTest {
 	public void testVersionFromNumberVersion1(){
 		DatabaseSchemaVersion version = DatabaseSchemaVersion.fromNumber(1);
 		Assert.assertEquals(DatabaseSchemaVersion.VERSION_1, version);
-		Assert.assertEquals(DatabaseSchemaVersion.VERSION_1, version.getNextVersion());
+		Assert.assertEquals(DatabaseSchemaVersion.VERSION_2, version.getNextVersion());
+	}
+	
+	@Test
+	public void testVersionFromNumberVersion2(){
+		DatabaseSchemaVersion version = DatabaseSchemaVersion.fromNumber(2);
+		Assert.assertEquals(DatabaseSchemaVersion.VERSION_2, version);
+		Assert.assertEquals(DatabaseSchemaVersion.VERSION_2, version.getNextVersion());
 	}
 }
