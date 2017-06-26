@@ -2,6 +2,8 @@ package com.ntlx.board;
 
 import java.util.Vector;
 
+import com.ntlx.exception.CardNotFoundException;
+
 public class Lane {
 	protected int id;
 	protected String title;
@@ -16,5 +18,19 @@ public class Lane {
 	}
 	public int getId() {
 		return id;
+	}
+	public boolean hasCard(int cardId) {
+		for (Card card : cards) {
+			if (card.getId() == cardId)
+				return true;
+		}
+		return false;
+	}
+	public Card getCard(int cardId) throws CardNotFoundException {
+		for (Card card : cards) {
+			if (card.getId() == cardId)
+				return card;
+		}
+		throw new CardNotFoundException();
 	}
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 import com.ntlx.data.migration.DatabaseSchemaVersion;
 
 public class DatabaseSchemaVersionTest {
-	TestDatabaseDAOFactory factory = new TestDatabaseDAOFactory();
+	TestDatabaseDAOFactory factory = new TestDatabaseDAOFactory(TestDatabase.getInstance());
 	
 	@Test
 	public void testVersionFromNumberUnknown(){

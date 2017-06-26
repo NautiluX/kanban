@@ -15,6 +15,7 @@ public class DatabaseLaneDAO extends DatabaseDAO<Lane>{
 	private String singleLaneSql = baseSql + " WHERE LANE_ID = ?";
 	
 	private String tag;
+	private boolean isShowArchivedCards;
 	
 	public DatabaseLaneDAO(Database db) throws NamingException, SQLException {
 		super(db);
@@ -51,6 +52,7 @@ public class DatabaseLaneDAO extends DatabaseDAO<Lane>{
 	private void addCards(Lane lane) throws SQLException, NamingException {
 		DatabaseCardDAO databaseCardDao = new DatabaseCardDAO(database);
 		databaseCardDao.setTag(tag);
+		databaseCardDao.setShowArchivedCards(isShowArchivedCards);
 		databaseCardDao.loadDAOs(lane);
 	}
 
@@ -62,5 +64,10 @@ public class DatabaseLaneDAO extends DatabaseDAO<Lane>{
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+
+	
+	public void setShowArchivedCards(boolean isShowArchivedCards) {
+		this.isShowArchivedCards  = isShowArchivedCards;
 	}
 }

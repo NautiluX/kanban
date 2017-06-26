@@ -6,21 +6,28 @@ import java.sql.SQLException;
 import javax.naming.NamingException;
 
 import com.ntlx.data.*;
+import com.ntlx.exception.MigrationFailedException;
 
 public class TestDatabaseDAOFactory implements DatabaseDAOFactory{
-	public DatabaseCardDAO createDatabaseCardDAO() throws NamingException, SQLException, ClassNotFoundException {
-		return new DatabaseCardDAO(TestDatabase.getInstance());
+	private Database db;
+
+	public TestDatabaseDAOFactory(Database instance) {
+		this.db = instance;
 	}
 
-	public DatabaseBoardDAO createDatabaseBoardDAO() throws NamingException, SQLException, ClassNotFoundException {
-		return new DatabaseBoardDAO(TestDatabase.getInstance());
+	public DatabaseCardDAO createDatabaseCardDAO() throws NamingException, SQLException, ClassNotFoundException, MigrationFailedException {
+		return new DatabaseCardDAO(db);
 	}
 
-	public DatabaseUserDAO createDatabaseUserDAO() throws NamingException, SQLException, ClassNotFoundException {
-		return new DatabaseUserDAO(TestDatabase.getInstance());
+	public DatabaseBoardDAO createDatabaseBoardDAO() throws NamingException, SQLException, ClassNotFoundException, MigrationFailedException {
+		return new DatabaseBoardDAO(db);
 	}
 
-	public DatabaseLaneDAO createDatabaseLaneDAO() throws NamingException, SQLException, ClassNotFoundException {
-		return new DatabaseLaneDAO(TestDatabase.getInstance());
+	public DatabaseUserDAO createDatabaseUserDAO() throws NamingException, SQLException, ClassNotFoundException, MigrationFailedException {
+		return new DatabaseUserDAO(db);
+	}
+
+	public DatabaseLaneDAO createDatabaseLaneDAO() throws NamingException, SQLException, ClassNotFoundException, MigrationFailedException {
+		return new DatabaseLaneDAO(db);
 	}
 }

@@ -149,6 +149,16 @@ span.lane {
     white-space: normal;
     height: calc(100% - 39px);
     overflow: scroll;
+
+}
+//Hide scrollbar
+.noscrollbar {
+    -ms-overflow-style: none;  // IE 10+
+    overflow: -moz-scrollbars-none; // Firefox
+}
+
+.noscrollbar::-webkit-scrollbar { 
+    display: none; //Safari and Chrome
 }
 
 h1 {

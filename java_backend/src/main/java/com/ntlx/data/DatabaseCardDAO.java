@@ -14,37 +14,40 @@ import com.ntlx.exception.AuthorizationException;
 import com.ntlx.exception.DeleteNotAllowedException;
 
 public class DatabaseCardDAO extends DatabaseDAO<Card> {
-	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME FROM CARDS LEFT JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID";
-	String laneCardsSql = baseSql + " WHERE LANE_ID = ?";
-	String singleCardSql = baseSql + " WHERE CARD_ID = ?";
+	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME FROM CARDS LEFT JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID WHERE IS_ARCHIVED IS ?";
+	String laneCardsSql = baseSql + " AND LANE_ID = ?";
+	String singleCardSql = baseSql + " AND CARD_ID = ?";
 	String laneCardsSqlTag = laneCardsSql + " AND CONTENT LIKE ?";
 
 	String insertSql = "INSERT INTO CARDS (BOARD_ID, LANE_ID, OWNER_ID, CONTENT) VALUES (?, ?, ?, ?)";
 	String updateSql = "UPDATE CARDS SET LANE_ID = ? WHERE CARD_ID = ?";
-	String deleteSql = "DELETE FROM CARDS WHERE CARD_ID = ?";
+	String deleteSql = "UPDATE CARDS SET IS_ARCHIVED = 1 WHERE CARD_ID = ?";
 	private String tag = null;
+	private boolean isShowArchivedCards;
 	
 	public DatabaseCardDAO(Database database) throws NamingException, SQLException {
 		super(database);
 	}
+	
+	public void setParameterShowArchivedCards(PreparedStatement statement) throws SQLException {
+		if (isShowArchivedCards)
+			statement.setInt(1, 1);
+		else
+			statement.setNull(1, java.sql.Types.INTEGER);
+			//statement.setInt(1, 1);
+	}
 
 	public void loadDAOs(Lane lane) throws SQLException {
-		PreparedStatement statement;
-		if (tag == null) {
-			statement = database.prepareStatement(laneCardsSql);
-			statement.setInt(1, lane.getId());
-		} else {
-			statement = database.prepareStatement(laneCardsSqlTag);
-			statement.setInt(1, lane.getId());
-			statement.setString(2, "%#"+tag+"%");
-		}
+		CardSelectionSqlStatement cardStatement = new CardSelectionSqlStatement(isShowArchivedCards, tag, lane.getId());
+		PreparedStatement statement = cardStatement.prepareStatement(database);
 		ResultSet rs = statement.executeQuery();
 		addCardsFromResultSet(rs, lane);
 	}
 
 	public Card loadCard(int cardId) throws SQLException {
 		PreparedStatement statement = database.prepareStatement(singleCardSql);
-		statement.setInt(1, cardId);
+		setParameterShowArchivedCards(statement);
+		statement.setInt(2, cardId);
 		ResultSet rs = statement.executeQuery();
 		return getSingleCardFromResultSet(rs);
 	}
@@ -93,6 +96,7 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 		statement.setInt(3, card.getOwnerId());
 		statement.setString(4, card.getContent());
 		statement.executeUpdate();
+		statement.close();
 	}
 	
 	public void delete(Board board, Card card) throws SQLException, AuthorizationException {
@@ -110,5 +114,9 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 
 	public void setTag(String tag) {
 		this.tag  = tag;
+	}
+
+	public void setShowArchivedCards(boolean isShowArchivedCards) {
+		this.isShowArchivedCards  = isShowArchivedCards;
 	}
 }

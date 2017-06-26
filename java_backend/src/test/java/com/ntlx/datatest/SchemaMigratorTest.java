@@ -14,7 +14,7 @@ import com.ntlx.data.migration.SchemaMigrator;
 import com.ntlx.exception.MigrationFailedException;
 
 public class SchemaMigratorTest {
-	TestDatabaseDAOFactory factory = new TestDatabaseDAOFactory();
+	TestDatabaseDAOFactory factory = new TestDatabaseDAOFactory(TestDatabase.getInstance());
 	
 	@Test
 	public void testInstalledVersionIsNotCurrentVersion() throws ClassNotFoundException, NamingException, SQLException{
@@ -50,10 +50,8 @@ public class SchemaMigratorTest {
 	}
 
 	@Test
-	public void testCreateVersionTable() throws SQLException, ClassNotFoundException, NamingException {
-		Database db = TestDatabase.getInstance();
-		DatabaseSchemaMigrationVersion1 v1 = new DatabaseSchemaMigrationVersion1(db);
-		v1.migrate();
+	public void testCreateVersionTable() throws SQLException, ClassNotFoundException, NamingException, MigrationFailedException {
+		Database db = TestDatabase.getInstance(); //Automatically migrated
 		Assert.assertTrue(db.hasVersionTable());
 	}
 	

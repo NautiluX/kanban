@@ -20,6 +20,7 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	
 	private String baseSql = "SELECT BOARD_ID, BOARD_NAME, USER_NAME, USER_ID, WORLD_READABLE FROM BOARDS LEFT JOIN USERS ON BOARDS.OWNER_ID = USERS.USER_ID";
 	private String tag = null;
+	private boolean isShowArchivedCards = false;
 	
 	public DatabaseBoardDAO(Database db) throws NamingException, SQLException {
 		super(db);
@@ -77,6 +78,7 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 
 	public void loadLanes(Board board) throws SQLException, NamingException {
 		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(database);
+		databaseLaneDao.setShowArchivedCards(isShowArchivedCards);
 		databaseLaneDao.setTag(tag);
 		databaseLaneDao.loadDAOs(board);
 	}
@@ -84,5 +86,9 @@ public class DatabaseBoardDAO extends DatabaseDAO<Board>{
 	public Lane loadLane(Board board, int laneId) throws NamingException, SQLException {
 		DatabaseLaneDAO databaseLaneDao = new DatabaseLaneDAO(database);
 		return databaseLaneDao.loadLane(laneId);
+	}
+
+	public void setShowArchivedCards(boolean isShowArchivedCards) {
+		this.isShowArchivedCards  = isShowArchivedCards;
 	}
 }

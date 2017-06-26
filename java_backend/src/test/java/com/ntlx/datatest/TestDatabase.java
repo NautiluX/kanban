@@ -9,6 +9,9 @@ import javax.naming.NamingException;
 
 import com.ntlx.data.Database;
 import com.ntlx.data.DatabaseSetup;
+import com.ntlx.data.migration.DatabaseSchemaMigration;
+import com.ntlx.data.migration.SchemaMigrator;
+import com.ntlx.exception.MigrationFailedException;
 
 public class TestDatabase extends Database {
 	
@@ -22,10 +25,17 @@ public class TestDatabase extends Database {
         conn.setAutoCommit(true);
     }
 	
-    public static Database getInstance() throws NamingException, SQLException, ClassNotFoundException {
-		Database db = new TestDatabase();
-        DatabaseSetup dbSetup = new TestDatabaseSetup(db);
-        dbSetup.executeSetup();
+    public static Database getInstance() {
+    	Database db = null;
+        try {
+			db = new TestDatabase();
+	        DatabaseSetup dbSetup = new TestDatabaseSetup(db);
+	        dbSetup.executeSetup();
+	        SchemaMigrator m = new SchemaMigrator(db);
+			m.migrate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return db;
     }
 

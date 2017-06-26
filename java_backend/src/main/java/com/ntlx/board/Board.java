@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Vector;
 
 import com.google.gson.Gson;
+import com.ntlx.exception.CardNotFoundException;
 
 public class Board{
 	protected String name;
@@ -55,5 +56,14 @@ public class Board{
 
 	private boolean hasPermission(String permission) {
 		return permissions.contains(permission);
+	}
+	
+	public Card getCard(int cardId) throws CardNotFoundException {
+		for (Lane lane : lanes) {
+			if (lane.hasCard(cardId)) {
+				return lane.getCard(cardId);
+			}
+		}
+		throw new CardNotFoundException();
 	}
 }
