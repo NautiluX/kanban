@@ -42,7 +42,7 @@
   <user username="role1" password="<must-be-changed>" roles="role1"/>
 -->
 <role rolename="manager-script"/>
-<user username="admin" password="" roles="manager-script"/>
+<user username="admin" password="" roles="manager-script,manager-gui"/>
 <role rolename="manager-gui"/>
 <user username="tomcat" password="topsecret" roles="manager-gui"/>
 </tomcat-users>
