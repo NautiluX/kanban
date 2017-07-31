@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ntlx.data.ProductiveDatabaseSetup;
+import com.ntlx.data.migration.SchemaMigrator;
+import com.ntlx.exception.MigrationFailedException;
+import com.ntlx.data.Database;
 import com.ntlx.data.ProductiveDatabase;
 
 @WebServlet("/setup")
@@ -24,14 +27,20 @@ public class Setup extends HttpServlet {
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			ProductiveDatabaseSetup setup = new ProductiveDatabaseSetup(ProductiveDatabase.getInstance());
+			Database db = ProductiveDatabase.getInstance();
+			ProductiveDatabaseSetup setup = new ProductiveDatabaseSetup(db);
 			setup.executeSetup();
 			response.getWriter().println("setup done.");
+			SchemaMigrator migrator = new SchemaMigrator(db);
+			migrator.migrate();
 		}
 		catch (NamingException e) {
 			response.getWriter().append("Naming Error: " + e.getMessage());
 		}catch (SQLException e) {
 			response.getWriter().append("SQL Error: " + e.getMessage());
+		} catch (MigrationFailedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}	
 }
