@@ -13,7 +13,7 @@ The system shall be accessible for mobile devices as well as any web browser.
 - In root directory: docker-compose up -d
 - In *java_backend* directory: mvn tomcat7:deploy
 - go to *localhost:3333/backend/setup*
-- create a user by executing *docker exec kanban_database_1 /kanbanscripts/create_user.sh -a -u admin -p admin* (see [Create Users](#create-users) for more usage information) containername may need to be adjusted to your setup.
+- create a user by executing *docker exec yukan_database_1 /kanbanscripts/create_user.sh -a -u admin -p admin* (see [Create Users](#create-users) for more usage information) containername may need to be adjusted to your setup.
 - go to *localhost:3333/backend/migrate* to upgrade to the latest db schema
 - go to *localhost:3333*
 
