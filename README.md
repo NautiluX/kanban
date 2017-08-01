@@ -65,7 +65,7 @@ cd sbin
 ```
 
 ## Features
-Backlog managed [here](http://yukan.instantbooth.de)
+Backlog managed [here](http://yukan.ntlx.org)
 
 ## Board Permissions Concept
 - READ - User is allowed to read a board
