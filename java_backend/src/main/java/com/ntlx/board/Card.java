@@ -4,16 +4,16 @@ public class Card {
 	public static final int NEW_CARD_ID = -1;
 	protected int id;
 	protected int afterCardId;
-	protected int laneId;
+	protected transient Lane lane;
 	protected User owner;
 	protected String content;
 	protected int boardId;
 	
-	public Card(int id, User owner, String content, int laneId, int boardId) {
+	public Card(int id, User owner, String content, Lane lane, int boardId) {
 		this.id = id;
 		this.owner = owner;
 		this.content = content;
-		this.laneId = laneId;
+		this.lane = lane;
 		this.boardId = boardId;
 	}
 	
@@ -25,12 +25,12 @@ public class Card {
 		return afterCardId;
 	}
 
-	public int getLaneId () {
-		return laneId;
+	public Lane getLane () {
+		return lane;
 	}
 
 	public void moveToLane(Lane lane) {
-		laneId = lane.getId();
+		this.lane = lane;
 	}
 
 	public int getOwnerId() {
@@ -47,5 +47,9 @@ public class Card {
 
 	public int getBoardId() {
 		return boardId;
+	}
+
+	public void setContent(String string) {
+		this.content = string;
 	}
 }

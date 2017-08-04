@@ -9,6 +9,8 @@ import javax.naming.NamingException;
 import com.ntlx.board.Board;
 import com.ntlx.board.Card;
 import com.ntlx.board.Lane;
+import com.ntlx.board.UnsetLane;
+import com.ntlx.board.UnsetUser;
 import com.ntlx.board.User;
 import com.ntlx.exception.AuthorizationException;
 import com.ntlx.exception.DeleteNotAllowedException;
@@ -20,7 +22,7 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 	String laneCardsSqlTag = laneCardsSql + " AND CONTENT LIKE ?";
 
 	String insertSql = "INSERT INTO CARDS (BOARD_ID, LANE_ID, OWNER_ID, CONTENT) VALUES (?, ?, ?, ?)";
-	String updateSql = "UPDATE CARDS SET LANE_ID = ? WHERE CARD_ID = ?";
+	String updateSql = "UPDATE CARDS SET LANE_ID = ?, CONTENT = ? WHERE CARD_ID = ?";
 	String deleteSql = "UPDATE CARDS SET IS_ARCHIVED = 1 WHERE CARD_ID = ?";
 	private String tag = null;
 	private boolean isShowArchivedCards;
@@ -54,27 +56,23 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 
 	private Card getSingleCardFromResultSet(ResultSet rs) throws SQLException {
 		rs.next();
-		return createCardFromResultSet(rs);
+		return createCardFromResultSet(rs, UnsetUser.Instance, UnsetLane.Instance);
 	}
 
 	private void addCardsFromResultSet(ResultSet rs, Lane lane) throws SQLException {
 		while (rs.next()) {
-			Card card = createCardFromResultSet(rs);
+			User owner = createUserFromResultSet(rs);
+			Card card = createCardFromResultSet(rs, owner, lane);
 			lane.addCard(card);
 		}
-	}
-	
-	private Card createCardFromResultSet(ResultSet rs) throws SQLException {
-		User owner = createUserFromResultSet(rs);
-		return createCardFromResultSet(rs, owner);
 	}
 
 	private User createUserFromResultSet(ResultSet rs) throws SQLException {
 		return new User(rs.getInt("OWNER_ID"), rs.getString("USER_NAME"));
 	}
 
-	private Card createCardFromResultSet(ResultSet rs, User owner) throws SQLException {
-		Card card = new Card(rs.getInt("CARD_ID"), owner, rs.getString("CONTENT"), rs.getInt("LANE_ID"), rs.getInt("BOARD_ID"));
+	private Card createCardFromResultSet(ResultSet rs, User owner, Lane lane) throws SQLException {
+		Card card = new Card(rs.getInt("CARD_ID"), owner, rs.getString("CONTENT"), lane, rs.getInt("BOARD_ID"));
 		int afterCardId = rs.getInt("AFTER_CARD_ID");
 		if (!rs.wasNull()) {
 			card.setAfterCardId(afterCardId);
@@ -84,15 +82,16 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 
 	public void update(Card card) throws SQLException {
 		PreparedStatement statement = database.prepareStatement(updateSql);
-		statement.setInt(1, card.getLaneId());
-		statement.setInt(2, card.getId());
+		statement.setInt(1, card.getLane().getId());
+		statement.setString(2, card.getContent());
+		statement.setInt(3, card.getId());
 		statement.execute();
 	}
 
 	public void create(Card card) throws SQLException {
 		PreparedStatement statement = database.prepareStatement(insertSql);
 		statement.setInt(1, card.getBoardId());
-		statement.setInt(2, card.getLaneId());
+		statement.setInt(2, card.getLane().getId());
 		statement.setInt(3, card.getOwnerId());
 		statement.setString(4, card.getContent());
 		statement.executeUpdate();

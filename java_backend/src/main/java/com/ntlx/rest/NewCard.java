@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ntlx.board.Card;
+import com.ntlx.board.Lane;
 import com.ntlx.board.User;
 import com.ntlx.data.DatabaseCardDAO;
+import com.ntlx.data.DatabaseLaneDAO;
 import com.ntlx.data.DatabaseUserDAO;
 
 
@@ -43,10 +45,13 @@ public class NewCard extends KanbanServlet {
 
 	private void createCard(int boardId, int laneId, String content, String userName) throws NamingException, SQLException {
 		DatabaseUserDAO userDao = databaseDaoFactory.createDatabaseUserDAO();
-		User owner = userDao.loadUser(userName);
-		
+		DatabaseLaneDAO laneDao = databaseDaoFactory.createDatabaseLaneDAO();
 		DatabaseCardDAO cardDao = databaseDaoFactory.createDatabaseCardDAO();
-		Card card = new Card(Card.NEW_CARD_ID, owner, content, laneId, boardId);
+		
+		User owner = userDao.loadUser(userName);
+		Lane lane = laneDao.loadLane(laneId);
+		Card card = new Card(Card.NEW_CARD_ID, owner, content, lane, boardId);
+		
 		cardDao.create(card);
 	}
 }

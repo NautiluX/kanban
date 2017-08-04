@@ -10,7 +10,10 @@ import org.junit.Test;
 
 import com.ntlx.board.Board;
 import com.ntlx.board.Card;
+import com.ntlx.board.Lane;
+import com.ntlx.board.UnsetLane;
 import com.ntlx.board.User;
+import com.ntlx.boardtest.TestLane;
 import com.ntlx.boardtest.TestOwner;
 import com.ntlx.data.DatabaseBoardDAO;
 import com.ntlx.data.DatabaseCardDAO;
@@ -24,7 +27,7 @@ public class DatabaseCardDAOTest {
 	@Test
 	public void test() throws ClassNotFoundException, NamingException, SQLException, MigrationFailedException {
 		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
-		Card card = new Card(Card.NEW_CARD_ID, new TestOwner(), "TestContent", 1, 1);
+		Card card = new Card(Card.NEW_CARD_ID, new TestOwner(), "TestContent", UnsetLane.Instance, 1);
 		dao.create(card);
 		Card cardRes = dao.loadCard(4);
 		Assert.assertEquals("TestContent", cardRes.getContent());
@@ -34,7 +37,7 @@ public class DatabaseCardDAOTest {
 	public void testDeleteCardUnauthorized() throws ClassNotFoundException, NamingException, SQLException, MigrationFailedException {
 		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
 		DatabaseBoardDAO boardDao = factory.createDatabaseBoardDAO();
-		Card card = new Card(Card.NEW_CARD_ID, new TestOwner(), "TestContent", 1, 1);
+		Card card = new Card(Card.NEW_CARD_ID, new TestOwner(), "TestContent", UnsetLane.Instance, 1);
 		dao.create(card);
 		User unauthorizedUser = new User(2, "Evil User");
 		Board board = boardDao.loadSingleDAO(card.getBoardId(), unauthorizedUser);
@@ -51,7 +54,7 @@ public class DatabaseCardDAOTest {
 		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
 		DatabaseBoardDAO boardDao = factory.createDatabaseBoardDAO();
 		User owner = new TestOwner();
-		Card card = new Card(Card.NEW_CARD_ID, owner, "TestContent", 1, 1);
+		Card card = new Card(Card.NEW_CARD_ID, owner, "TestContent", UnsetLane.Instance, 1);
 		dao.create(card);
 		Board board = boardDao.loadSingleDAO(card.getBoardId(), owner);
 		try {
@@ -66,7 +69,8 @@ public class DatabaseCardDAOTest {
 		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
 		DatabaseBoardDAO boardDao = factory.createDatabaseBoardDAO();
 		User owner = new TestOwner();
-		Card card = new Card(Card.NEW_CARD_ID, owner, "TestContent", 1, 1);
+		Lane lane = new TestLane();
+		Card card = new Card(Card.NEW_CARD_ID, owner, "TestContent", lane, 1);
 		dao.create(card);
 		Board board = boardDao.loadSingleDAO(card.getBoardId(), owner);
 		System.out.println(board.toString());
@@ -87,7 +91,8 @@ public class DatabaseCardDAOTest {
 		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
 		DatabaseBoardDAO boardDao = factory.createDatabaseBoardDAO();
 		User owner = new TestOwner();
-		Card card = new Card(Card.NEW_CARD_ID, owner, "TestContent", 1, 1);
+		Lane lane = new TestLane();
+		Card card = new Card(Card.NEW_CARD_ID, owner, "TestContent", lane, 1);
 		dao.create(card);
 		
 		Board board = boardDao.loadSingleDAO(card.getBoardId(), owner);
@@ -100,6 +105,16 @@ public class DatabaseCardDAOTest {
 		} catch (CardNotFoundException e) {
 			Assert.fail("archived card should be found");
 		}
+	}
+	
+	@Test
+	public void testUpdateCard() throws ClassNotFoundException, NamingException, SQLException, MigrationFailedException, AuthorizationException, CardNotFoundException {
+		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
+		Card card = dao.loadCard(1);
+		card.setContent("UpdateCardTest");
+		dao.update(card);
+		Card changedCard = dao.loadCard(1);
+		Assert.assertEquals("UpdateCardTest", changedCard.getContent());
 	}
 
 }
