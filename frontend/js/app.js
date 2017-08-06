@@ -89,10 +89,21 @@ App.prototype.createCard = function(laneId, content) {
     var self = this;
     var callback = function() {self.onLoaded()};
     model.createCard(laneId, content, callback);
-}
+};
 
 App.prototype.deleteCard = function(card) {
     var self = this;
     var callback = function() {self.onLoaded()};
     model.deleteCard(card, callback);
-}
+};
+
+App.prototype.showCard = function(cardId) {
+    var card = model.getCard(~~cardId, renderCardPopup);
+};
+
+App.prototype.updateCard = function(card) {
+    var self = this;
+    var callback = function() {self.onLoaded()};
+    model.updateCard(card, callback);
+    hidePopup();
+};

@@ -19,7 +19,9 @@ import com.ntlx.data.ProductiveDatabaseDAOFactory;
 import com.ntlx.data.migration.SchemaMigrator;
 import com.ntlx.exception.AuthorizationException;
 import com.ntlx.exception.BoardNotFoundException;
+import com.ntlx.exception.CardNotFoundException;
 import com.ntlx.exception.DatabaseSchemaOutdatedException;
+import com.ntlx.exception.KanbanException;
 
 public abstract class KanbanServlet extends HttpServlet {
 
@@ -64,6 +66,9 @@ public abstract class KanbanServlet extends HttpServlet {
  		} catch (DatabaseSchemaOutdatedException e) {
 			writeResponse(response, "Database Error: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		} catch (KanbanException e) {
+			writeResponse(response, "Unexpected Kanban Error: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -98,6 +103,9 @@ public abstract class KanbanServlet extends HttpServlet {
  		} catch (DatabaseSchemaOutdatedException e) {
 			writeResponse(response, "Database Error: " + e.getMessage());
  			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		} catch (KanbanException e) {
+			writeResponse(response, "Unexpected Kanban Error: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -106,7 +114,7 @@ public abstract class KanbanServlet extends HttpServlet {
         response.getOutputStream().write(responseText.getBytes("UTF-8"));
 	}
 	
-	protected void doKanbanPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, NamingException, SQLException, AuthorizationException, BoardNotFoundException{};
-	protected void doKanbanGet(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, NamingException, SQLException, AuthorizationException, BoardNotFoundException{};
+	protected void doKanbanPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, NamingException, SQLException, KanbanException{};
+	protected void doKanbanGet(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, NamingException, SQLException, KanbanException{};
 
 }

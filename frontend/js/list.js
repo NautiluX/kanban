@@ -1,5 +1,6 @@
 var adjustment;
 var SORTABLE_SELECTOR="ol.example";
+var CARD_SELECTOR="li.example";
 var initSortable = function () {
     var dragAllowed = true;
     if (!model.hasPermission("MANAGE")) {
@@ -42,6 +43,7 @@ var initSortable = function () {
             });
         }
     });
+    $(CARD_SELECTOR).click(clickCard);
     registerNewCardEvent();
 }
 
@@ -68,4 +70,8 @@ var createCard = function(lane, content) {
 
 var getLane = function(card) {
     return $(card).parent().parent()
+}
+
+var clickCard = function () {
+    app.showCard($(this).attr("card_id"));
 }

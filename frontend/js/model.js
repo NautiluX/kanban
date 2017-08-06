@@ -58,7 +58,8 @@ Model.prototype.hasPermission = function (permission) {
 
 Model.prototype.moveCard = function(cardId, newLaneId, callback) {
     $.post("/backend/moveCard", 
-        { "cardId": cardId,
+        {"boardId": this.selectedBoard.id,
+         "cardId": cardId,
          "newLaneId": newLaneId},
         function (data) {
             model.updateModel(callback);
@@ -71,14 +72,35 @@ Model.prototype.deleteCard = function(card, callback) {
         function (data) {
             model.updateModel(callback);
         });
-}
+};
 
 Model.prototype.getTag = function () {
     return this.tag?this.tag:'';
-}
+};
 
 Model.prototype.setTag = function (tag) {
     this.tag = tag;
-}
+};
+
+Model.prototype.getCard = function (cardId, callback) {
+    this.selectedBoard.lanes.forEach(function (lane) {
+        lane.cards.forEach(function (card) {
+            if (card.id === cardId) {
+                callback(card);
+                return;
+            }
+        });
+    });
+};
+
+Model.prototype.updateCard = function (card, callback) {
+    $.post("/backend/updateCard",
+        {"boardId": card.boardId, 
+         "cardId": card.id,
+         "content": card.content},
+        function (data) {
+            model.updateModel(callback);
+        });
+};
 
 var model = new Model();

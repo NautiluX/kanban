@@ -2,6 +2,7 @@ var app;
 $( document ).ready(function() {
     app = new App();
     app.loadDefaultBoard();
+    registerEvents();
 });
 
 var renderBoard = function (board) {
@@ -76,4 +77,61 @@ var renderCardDeleteButton = function (card) {
     var deleteButton = $(deleteHtml);
     deleteButton.on("click", function (e) {app.deleteCard(card);});
     return deleteButton;
+};
+
+var renderCardPopup = function (card) {
+    var popupHtml = '<textarea id="updateCard_area">' + card.content + '</textarea>';
+    popupHtml += renderUpdateButton(card);
+    $("#popup").html(popupHtml);
+    $("#popup").show();
+    $("#popup").focus();
+    $("#updateCard").on("click", function(){
+        card.content = $("#updateCard_area").val();
+        app.updateCard(card);
+    });
+};
+
+var renderUpdateButton = function (card) {
+    var buttonHtml = '<button id="updateCard">Update Card</button>';
+    return buttonHtml;
+};
+
+var registerEvents = function() {
+    registerPopupUnfocus();
+};
+
+var registerPopupUnfocus = function() {
+    $("#popup").on("keydown", function (e) {
+      if (e.which == 27) {
+          hidePopupIfUnselected();
+          return false;
+        }
+    });
+    $("#popup").on("blur", function(e) {
+        hidePopupIfUnselected();
+    });
+};
+
+var hidePopup = function() {
+    $("#popup").hide();
+};
+
+var hidePopupIfUnselected = function () {
+    setTimeout(function() {
+        if (!childFocused($("#popup"))) {
+            hidePopup();
+        }
+    }, 100);
+};
+
+var childFocused = function (elem) {
+    var childHasFocus = false;
+    elem.children().each(function(i){
+        if($(this).is(":focus")) {
+            childHasFocus = true;
+        } else if (childFocused($(this))) {
+            childHasFocus = true;
+        }
+    });
+    return childHasFocus;
 }

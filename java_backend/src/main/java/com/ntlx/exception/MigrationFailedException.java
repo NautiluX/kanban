@@ -2,7 +2,7 @@ package com.ntlx.exception;
 
 import com.ntlx.data.migration.DatabaseSchemaVersion;
 
-public class MigrationFailedException extends Exception {
+public class MigrationFailedException extends KanbanException {
 	private static final long serialVersionUID = 1L;
 	DatabaseSchemaVersion version;
 	public MigrationFailedException(DatabaseSchemaVersion version) {

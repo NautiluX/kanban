@@ -110,9 +110,13 @@ public class DatabaseCardDAOTest {
 	@Test
 	public void testUpdateCard() throws ClassNotFoundException, NamingException, SQLException, MigrationFailedException, AuthorizationException, CardNotFoundException {
 		DatabaseCardDAO dao = factory.createDatabaseCardDAO();
-		Card card = dao.loadCard(1);
+		DatabaseBoardDAO boardDao = factory.createDatabaseBoardDAO();
+		User owner = new TestOwner();
+
+		Board board = boardDao.loadSingleDAO(1, owner);
+		Card card = board.getCard(1);
 		card.setContent("UpdateCardTest");
-		dao.update(card);
+		dao.update(board, card);
 		Card changedCard = dao.loadCard(1);
 		Assert.assertEquals("UpdateCardTest", changedCard.getContent());
 	}

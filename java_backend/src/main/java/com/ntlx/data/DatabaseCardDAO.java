@@ -14,6 +14,7 @@ import com.ntlx.board.UnsetUser;
 import com.ntlx.board.User;
 import com.ntlx.exception.AuthorizationException;
 import com.ntlx.exception.DeleteNotAllowedException;
+import com.ntlx.exception.UpdateNotAllowedException;
 
 public class DatabaseCardDAO extends DatabaseDAO<Card> {
 	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME FROM CARDS LEFT JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID WHERE IS_ARCHIVED IS ?";
@@ -80,7 +81,7 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 		return card;
 	}
 
-	public void update(Card card) throws SQLException {
+	private void update(Card card) throws SQLException {
 		PreparedStatement statement = database.prepareStatement(updateSql);
 		statement.setInt(1, card.getLane().getId());
 		statement.setString(2, card.getContent());
@@ -103,6 +104,13 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 			delete(card);
 		else
 			throw new DeleteNotAllowedException();
+	}
+	
+	public void update(Board board, Card card) throws SQLException, AuthorizationException {
+		if (board.isContributable()) {
+			update(card);
+		}else
+			throw new UpdateNotAllowedException();
 	}
 
 	private void delete(Card card) throws SQLException {

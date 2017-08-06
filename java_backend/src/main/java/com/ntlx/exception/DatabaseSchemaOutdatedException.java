@@ -1,6 +1,6 @@
 package com.ntlx.exception;
 
-public class DatabaseSchemaOutdatedException extends Exception {
+public class DatabaseSchemaOutdatedException extends KanbanException {
 	private static final long serialVersionUID = 1L;
 
 	public String getMessage() {

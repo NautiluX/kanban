@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.google.gson.Gson;
 import com.ntlx.exception.CardNotFoundException;
+import com.ntlx.exception.LaneNotFoundException;
 
 public class Board{
 	protected String name;
@@ -65,5 +66,14 @@ public class Board{
 			}
 		}
 		throw new CardNotFoundException();
+	}
+
+	public Lane getLane(int laneId) throws LaneNotFoundException {
+		for (Lane lane : lanes) {
+			if (lane.id == laneId) {
+				return lane;
+			}
+		}
+		throw new LaneNotFoundException();
 	}
 }
