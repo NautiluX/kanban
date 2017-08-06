@@ -71,8 +71,8 @@ var highlightTags = function (content) {
 };
 
 var renderCardDeleteButton = function (card) {
-    deleteHtml = '<button class="deleteCard">';
-    deleteHtml += '<i class="deleteCard material-icons" card_id="' + card.id + '" id="delete_card_' + card.id + '">delete</i>';
+    deleteHtml = '<button class="icon">';
+    deleteHtml += '<i class="icon material-icons" card_id="' + card.id + '" id="delete_card_' + card.id + '">delete</i>';
     deleteHtml += '</button>';
     var deleteButton = $(deleteHtml);
     deleteButton.on("click", function (e) {app.deleteCard(card);});
@@ -80,7 +80,9 @@ var renderCardDeleteButton = function (card) {
 };
 
 var renderCardPopup = function (card) {
-    var popupHtml = '<textarea id="updateCard_area">' + card.content + '</textarea>';
+    var popupHtml = '';
+    popupHtml += renderUpdateHeader(card);
+    popupHtml += renderUpdateTextArea(card);
     popupHtml += renderUpdateButton(card);
     $("#popup").html(popupHtml);
     $("#popup").show();
@@ -91,8 +93,24 @@ var renderCardPopup = function (card) {
     });
 };
 
+var renderUpdateHeader = function (card) {
+    var html = '<h2>Show & Update Card</h2>';
+    return html;
+}
+
+var renderUpdateTextArea = function (card) {
+    var html = null;
+    if (app.hasPermission("CONTRIBUTE")) {
+        html =  '<div class="cardInput"><textarea id="updateCard_area">' + card.content + '</textarea></div>';
+    } else {
+        html = card.content;
+    }
+
+    return html;
+};
+
 var renderUpdateButton = function (card) {
-    var buttonHtml = '<button id="updateCard">Update Card</button>';
+    var buttonHtml = '<button id="updateCard" class="icon done"><i class="material-icons icon">done</i></button>';
     return buttonHtml;
 };
 

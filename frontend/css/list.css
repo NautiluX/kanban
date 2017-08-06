@@ -181,7 +181,7 @@ div.cardContent {
     display: inline-block;
 }
 
-button.deleteCard {
+button.icon {
     width: 11px;
     display: inline-block;
     border: 0px solid #000;
@@ -190,23 +190,36 @@ button.deleteCard {
     color:#0090d2;
 }
 
-button.deleteCard:hover {
+button.icon:hover {
     color: #ffffff;
 }
 
-i.deleteCard {
+i.icon {
     font-size:17pt;
 }
 
 div.popup{
     display: none;
     position: fixed;
-    left: 2em;
-    top:2em;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     background-color: #94D3F0;
-    width: calc(100% - 4em);
-    height: calc(100% - 4em);
+    min-width: 50vw;
+    min-height: 50vw;
     border-radius:3px;
-    padding: 3px;
+    padding: 1em;
     outline: none !important;
+}
+
+.cardInput {
+    background-color: #359AC9;
+    box-shadow: 1px 1px 1px #A6D5EB;
+    border-radius:3px;
+}
+
+button.done {
+    position: absolute;
+    right: 2em;
+    bottom: 1em;
 }

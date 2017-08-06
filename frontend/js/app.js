@@ -57,6 +57,10 @@ App.prototype.initializeMenubar = function() {
         this.createMenuItem('login', this.generateParamLink('login_link', 'Log in', 'Log in', {rw: true}));
 };
 
+App.prototype.hasPermission = function (permission) {
+    return model.hasPermission(permission);
+};
+
 App.prototype.createMenuItem = function(id, html) {
     $('#menubar').append($('<div class="menuitem" id="' + id + '">' + html + '</div>'));
 };
