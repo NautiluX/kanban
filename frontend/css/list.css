@@ -55,6 +55,10 @@ li {
     box-shadow: 1px 1px 1px #2081AE;
 }
 
+li.archived {
+    background-color: #b3c7d1;
+}
+
 li.newCard {
     background-color: #359AC9;
     box-shadow: 1px 1px 1px #A6D5EB;

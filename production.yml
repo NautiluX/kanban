@@ -16,6 +16,7 @@ backend_prod:
     links: 
         - database_prod:database
     volumes:
+        - ./java_backend/managercontext.xml:/usr/local/tomcat/webapps/manager/META-INF/context.xml
         - ./java_backend/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
         - ./java_backend/mysql-connector-java-5.1.40-bin.jar:/usr/local/tomcat/lib/mysql-connector-java-5.1.40-bin.jar
         - ./java_backend/logs:/usr/local/tomcat/logs

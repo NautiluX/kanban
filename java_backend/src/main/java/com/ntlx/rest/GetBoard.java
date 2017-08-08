@@ -30,8 +30,10 @@ public class GetBoard extends KanbanServlet {
     protected void doKanbanGet(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, NamingException, SQLException, AuthorizationException, BoardNotFoundException {
      	dbl = databaseDaoFactory.createDatabaseBoardDAO();
 
-    	String boardId = request.getParameter("id");
-    	String tag = request.getParameter("tag");
+	    	String boardId = request.getParameter("id");
+	    	String tag = request.getParameter("tag");
+		boolean showArchivedCards = Boolean.parseBoolean(request.getParameter("showArchivedCards"));
+		dbl.setShowArchivedCards(showArchivedCards);
 		if (boardId == null) {
 			writeResponse(response, "Board id missing");
 		} else {

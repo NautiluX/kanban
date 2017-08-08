@@ -47,14 +47,14 @@ var renderCard = function (lane, card) {
     var cardContent = renderCardContent(card);
     $('#lane_'+lane.id+'_list').append(cardHtml);
     $('#card_' + card.id).append(cardContent);
-    if (model.hasPermission("CONTRIBUTE")) {
+    if (model.hasPermission("CONTRIBUTE") && !card.isArchived) {
         var deleteHtml = renderCardDeleteButton(card);
         $('#card_' + card.id).append(deleteHtml);
     }
 };
 
 var renderCardListItem = function (card) {
-    var cardHtml = '<li class="example" card_id="' + card.id + '" id="card_' + card.id + '">';
+    var cardHtml = '<li class="example' + (card.isArchived?' archived':'') + '" card_id="' + card.id + '" id="card_' + card.id + '">';
     cardHtml += '</li>';
     return cardHtml;
 };
@@ -75,7 +75,10 @@ var renderCardDeleteButton = function (card) {
     deleteHtml += '<i class="icon material-icons" card_id="' + card.id + '" id="delete_card_' + card.id + '">delete</i>';
     deleteHtml += '</button>';
     var deleteButton = $(deleteHtml);
-    deleteButton.on("click", function (e) {app.deleteCard(card);});
+    deleteButton.on("click", function (e) {
+        app.deleteCard(card);
+        return false;
+    });
     return deleteButton;
 };
 

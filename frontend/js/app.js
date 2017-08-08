@@ -14,6 +14,7 @@ App.prototype.loadDefaultBoard = function () {
 App.prototype.loadBoard = function (boardId) {
     var readWrite = $.url('?rw');
     model.setTag($.url('?tag'));
+    model.setShowArchivedCards($.url('?showArchivedCards') === 'true');
     this.loadBoardReadmode(boardId, readWrite);
 };
 
@@ -53,6 +54,9 @@ App.prototype.initializeMenubar = function() {
 
     this.createMenuItem('currentTag', 'All Cards Shown');
 
+    var archivedMode = model.getShowArchivedCards()?'Hide':'Show';
+    this.createMenuItem('showArchivedCards', this.generateParamLink('showArchivedCards_link', archivedMode + ' Archived Cards', archivedMode + ' Archived Cards', {showArchivedCards: !model.getShowArchivedCards()}));
+
     if (!model.hasPermission("CONTRIBUTE"))
         this.createMenuItem('login', this.generateParamLink('login_link', 'Log in', 'Log in', {rw: true}));
 };
@@ -78,6 +82,12 @@ App.prototype.generateParamLink = function(id, title, text, change) {
         tagValue = change.tag;
     }
     href += '&tag=' + tagValue;
+
+    var archivedValue = model.getShowArchivedCards();
+    if (change.hasOwnProperty('showArchivedCards')) {
+        archivedValue = change.showArchivedCards;
+    }
+    href += '&showArchivedCards=' + archivedValue;
 
     var link = '<a href="' + href + '" id="' + id + '" title="' + title + '">' + text + '</a>';
     return link;

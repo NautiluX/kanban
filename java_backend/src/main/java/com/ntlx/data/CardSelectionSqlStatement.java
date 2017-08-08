@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CardSelectionSqlStatement {
-	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME FROM CARDS LEFT JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID";
+	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME, IS_ARCHIVED FROM CARDS LEFT JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID";
 	String laneCardsSql = " WHERE LANE_ID = ?";
 	String archivedOnlySql = " AND IS_ARCHIVED IS ?";
 	String laneCardsSqlTag = " AND CONTENT LIKE ?";

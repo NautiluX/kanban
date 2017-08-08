@@ -17,7 +17,7 @@ import com.ntlx.exception.DeleteNotAllowedException;
 import com.ntlx.exception.UpdateNotAllowedException;
 
 public class DatabaseCardDAO extends DatabaseDAO<Card> {
-	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME FROM CARDS LEFT JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID WHERE IS_ARCHIVED IS ?";
+	String baseSql = "SELECT CARD_ID, OWNER_ID, CONTENT, AFTER_CARD_ID, LANE_ID, BOARD_ID, USER_NAME, IS_ARCHIVED FROM CARDS LEFT JOIN USERS ON CARDS.OWNER_ID = USERS.USER_ID WHERE IS_ARCHIVED IS ?";
 	String laneCardsSql = baseSql + " AND LANE_ID = ?";
 	String singleCardSql = baseSql + " AND CARD_ID = ?";
 	String laneCardsSqlTag = laneCardsSql + " AND CONTENT LIKE ?";
@@ -74,6 +74,7 @@ public class DatabaseCardDAO extends DatabaseDAO<Card> {
 
 	private Card createCardFromResultSet(ResultSet rs, User owner, Lane lane) throws SQLException {
 		Card card = new Card(rs.getInt("CARD_ID"), owner, rs.getString("CONTENT"), lane, rs.getInt("BOARD_ID"));
+		card.setIsArchived(rs.getInt("IS_ARCHIVED") > 0);
 		int afterCardId = rs.getInt("AFTER_CARD_ID");
 		if (!rs.wasNull()) {
 			card.setAfterCardId(afterCardId);

@@ -2,6 +2,7 @@ var Model = function() {
     var selectedBoard;
     var tag = null;
     var readWrite = false;
+    var showArchivedCards = false;
 };
 
 Model.prototype.updateModel = function(callback) {
@@ -30,6 +31,7 @@ Model.prototype.generateBoardURL = function (url, id) {
     fullUrl += "?id=" + id;
     if (this.tag)
         fullUrl += "&tag=" + this.tag;
+    fullUrl += "&showArchivedCards=" + this.showArchivedCards;
     return fullUrl;
 };
 
@@ -81,6 +83,15 @@ Model.prototype.getTag = function () {
 Model.prototype.setTag = function (tag) {
     this.tag = tag;
 };
+
+Model.prototype.setShowArchivedCards = function(showArchivedCards) {
+    this.showArchivedCards = showArchivedCards;
+};
+
+Model.prototype.getShowArchivedCards = function() {
+    return this.showArchivedCards;
+};
+
 
 Model.prototype.getCard = function (cardId, callback) {
     this.selectedBoard.lanes.forEach(function (lane) {

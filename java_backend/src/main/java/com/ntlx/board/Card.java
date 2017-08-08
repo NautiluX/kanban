@@ -8,6 +8,7 @@ public class Card {
 	protected User owner;
 	protected String content;
 	protected int boardId;
+	private boolean isArchived = false;
 	
 	public Card(int id, User owner, String content, Lane lane, int boardId) {
 		this.id = id;
@@ -51,5 +52,9 @@ public class Card {
 
 	public void setContent(String string) {
 		this.content = string;
+	}
+
+	public void setIsArchived(boolean b) {
+		this.isArchived  = b;
 	}
 }
